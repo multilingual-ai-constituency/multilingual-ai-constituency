@@ -1,0 +1,150 @@
+<section class="role-login-page">
+
+    <div class="role-login-shell">
+
+        <aside class="role-login-visual">
+
+            <div class="role-login-brand">
+                <span class="role-login-brand-mark">M</span>
+                <span>CivicAI</span>
+            </div>
+
+            <div class="role-login-copy">
+                <span class="role-login-eyebrow">MP / MLA PORTAL</span>
+                <h1>Track the constituency’s pulse.</h1>
+                <p>Review incoming grievances, identify hotspots, and coordinate action across local priorities.</p>
+            </div>
+
+            <div class="role-login-features">
+                <div class="role-login-feature"><span></span>Constituency insights</div>
+                <div class="role-login-feature"><span></span>Live grievance monitoring</div>
+                <div class="role-login-feature"><span></span>Issue prioritisation</div>
+            </div>
+
+        </aside>
+
+        <main class="role-login-form-panel">
+
+            <div class="role-login-top">
+                <button type="button" class="role-back-button" id="backButton">← Back</button>
+                <span class="role-login-step">STEP 02 OF 04</span>
+            </div>
+
+            <div class="role-login-heading">
+                <p class="label">REPRESENTATIVE ACCESS</p>
+                <h2>Welcome back</h2>
+                <p>Sign in to open your CivicAI representative dashboard.</p>
+            </div>
+
+            <form id="mpmlaLoginForm" class="role-login-form" novalidate>
+                <div id="loginMessage" role="alert" aria-live="polite"></div>
+
+                <div class="role-form-group">
+                    <label for="mpmlaEmail">Official Email</label>
+                    <div class="role-input-wrapper">
+                        <input type="email" id="mpmlaEmail" name="mpmlaEmail" placeholder="Enter your official email" autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="role-form-group">
+                    <label for="mpmlaPassword">Password</label>
+                    <div class="role-input-wrapper">
+                        <input type="password" id="mpmlaPassword" name="mpmlaPassword" class="role-password-input" placeholder="Enter your password" autocomplete="current-password">
+                        <button type="button" class="role-password-toggle" id="togglePassword" aria-label="Show password">◉</button>
+                    </div>
+                </div>
+
+                <div class="role-login-options">
+                    <label class="role-remember"><input type="checkbox" id="mpmlaRemember"> Remember me</label>
+                    <button type="button" class="role-forgot" id="forgotPasswordButton">Forgot password?</button>
+                </div>
+
+                <button type="submit" id="mpmlaContinueButton" class="role-login-button">Continue to Representative Portal →</button>
+                <button type="button" id="mpmlaOTPButton" class="role-otp-button">Continue with OTP</button>
+            </form>
+
+        </main>
+
+    </div>
+
+    <style>
+        .role-login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            background: radial-gradient(circle at 10% 10%, rgba(160, 215, 235, 0.18), transparent 30%), radial-gradient(circle at 90% 90%, rgba(132, 88, 179, 0.16), transparent 32%), var(--background);
+            color: var(--text-primary);
+        }
+        .role-login-shell {
+            width: min(1050px, 100%);
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            box-shadow: var(--shadow-lg);
+        }
+        .role-login-visual {
+            min-height: 650px;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: linear-gradient(145deg, rgba(95, 120, 221, 0.96), rgba(71, 90, 169, 0.96));
+            color: #fff;
+            position: relative;
+        }
+        .role-login-visual::before {
+            content: "";
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            right: -180px;
+            top: -120px;
+            border-radius: 50%;
+            background: rgba(160, 215, 235, 0.18);
+        }
+        .role-login-brand { position: relative; z-index: 1; display: flex; align-items: center; gap: 12px; font-size: 21px; font-weight: 800; }
+        .role-login-brand-mark { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25); }
+        .role-login-copy { position: relative; z-index: 1; }
+        .role-login-eyebrow { display: inline-flex; padding: 8px 13px; border: 1px solid rgba(255,255,255,0.25); border-radius: 999px; background: rgba(255,255,255,0.10); font-size: 11px; font-weight: 800; letter-spacing: 1.2px; }
+        .role-login-copy h1 { margin: 22px 0 18px; font-size: clamp(38px, 5vw, 58px); line-height: 1; letter-spacing: -2px; }
+        .role-login-copy p { max-width: 430px; margin: 0; color: rgba(255,255,255,0.78); font-size: 15px; line-height: 1.7; }
+        .role-login-features { position: relative; z-index: 1; display: grid; gap: 12px; }
+        .role-login-feature { display: flex; align-items: center; gap: 11px; color: rgba(255,255,255,0.86); font-size: 13px; }
+        .role-login-feature span { width: 8px; height: 8px; border-radius: 50%; background: #A0D7EB; }
+        .role-login-form-panel { padding: 48px; display: flex; flex-direction: column; justify-content: center; background: var(--surface); }
+        .role-login-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 38px; }
+        .role-back-button { display: inline-flex; align-items: center; gap: 7px; border: 0; background: transparent; color: var(--text-secondary); font-size: 14px; font-weight: 600; cursor: pointer; }
+        .role-back-button:hover { color: var(--primary); }
+        .role-login-step { color: var(--text-muted); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; }
+        .role-login-heading { margin-bottom: 30px; }
+        .role-login-heading .label { margin-bottom: 10px; color: var(--primary); font-size: 11px; font-weight: 800; letter-spacing: 1.5px; }
+        .role-login-heading h2 { margin: 0 0 10px; color: var(--text-primary); font-size: 36px; line-height: 1.05; letter-spacing: -1.4px; }
+        .role-login-heading p { margin: 0; color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
+        .role-login-form { display: grid; gap: 18px; }
+        .role-form-group { display: grid; gap: 8px; }
+        .role-form-group label { color: var(--text-primary); font-size: 13px; font-weight: 700; }
+        .role-input-wrapper { position: relative; }
+        .role-form-group input { width: 100%; height: 52px; padding: 0 15px; border: 1px solid var(--border); border-radius: 13px; outline: none; background: var(--surface-soft); color: var(--text-primary); transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease; }
+        .role-form-group input:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 4px rgba(132,88,179,.10); }
+        .role-password-input { padding-right: 50px !important; }
+        .role-password-toggle { position: absolute; right: 7px; top: 7px; width: 38px; height: 38px; display: grid; place-items: center; border: 0; border-radius: 9px; background: transparent; color: var(--text-muted); cursor: pointer; }
+        .role-password-toggle:hover { background: rgba(132,88,179,.08); color: var(--primary); }
+        .role-login-options { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: -2px; }
+        .role-remember { display: flex; align-items: center; gap: 7px; color: var(--text-secondary); font-size: 12px; }
+        .role-remember input { accent-color: var(--primary); }
+        .role-forgot { border: 0; background: transparent; color: var(--primary); font-size: 12px; font-weight: 700; cursor: pointer; }
+        .role-login-button { width: 100%; min-height: 54px; border: 0; border-radius: 14px; background: linear-gradient(135deg, #8458B3, #7347A2); color: white; font-size: 14px; font-weight: 750; cursor: pointer; box-shadow: 0 12px 28px rgba(132,88,179,.24); }
+        .role-login-button:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(132,88,179,.32); }
+        .role-otp-button { width: 100%; min-height: 48px; border: 1px solid var(--border); border-radius: 13px; background: transparent; color: var(--text-primary); font-size: 13px; font-weight: 650; cursor: pointer; }
+        .role-otp-button:hover { border-color: rgba(132,88,179,.35); background: rgba(132,88,179,.06); }
+        #loginMessage { margin-bottom: 0; }
+        @media (max-width: 850px) { .role-login-shell { grid-template-columns: 1fr; } .role-login-visual { min-height: auto; padding: 34px; gap: 35px; } .role-login-form-panel { padding: 34px; } }
+        @media (max-width: 520px) { .role-login-page { padding: 18px 12px; } .role-login-visual { padding: 28px 24px; } .role-login-copy h1 { font-size: 40px; } .role-login-form-panel { padding: 28px 22px; } .role-login-heading h2 { font-size: 31px; } }
+    </style>
+
+</section>

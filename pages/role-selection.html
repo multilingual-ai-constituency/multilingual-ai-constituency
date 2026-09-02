@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Choose Your Role | CivicAI</title>
+</head>
+
+
+<body>
+
+<section class="role-page">
+
+    <!-- =========================================
+         BACKGROUND
+         ========================================= -->
+
+    <div class="role-orb role-orb-one"></div>
+    <div class="role-orb role-orb-two"></div>
+    <div class="role-grid"></div>
+
+
+    <!-- =========================================
+         HEADER
+         ========================================= -->
+
+    <header class="role-header">
+
+        <!-- BACK -->
+        <button
+            type="button"
+            class="role-back-top"
+            id="roleBackButton"
+            aria-label="Return to CivicAI home"
+        >
+            <span>←</span>
+            Back
+        </button>
+
+
+        <!-- BRAND -->
+        <button
+            type="button"
+            class="role-brand"
+            id="roleBrand"
+        >
+
+            <span class="role-brand-mark">
+                ✦
+            </span>
+
+            <span class="role-brand-text">
+                Civic<span>AI</span>
+            </span>
+
+            <span class="role-brand-subtitle">
+                Multilingual AI Constituency
+            </span>
+
+        </button>
+
+
+        <!-- HEADER CONTROLS -->
+        <div class="role-header-controls">
+
+            <select
+                id="roleLanguageSelector"
+                class="role-language-selector"
+                aria-label="Select language"
+            >
+
+                <option value="en">
+                    English
+                </option>
+
+                <option value="ta">
+                    தமிழ் — Tamil
+                </option>
+
+                <option value="hi">
+                    हिन्दी — Hindi
+                </option>
+
+                <option value="te">
+                    తెలుగు — Telugu
+                </option>
+
+                <option value="ml">
+                    മലയാളം — Malayalam
+                </option>
+
+                <option value="kn">
+                    ಕನ್ನಡ — Kannada
+                </option>
+
+                <option value="mr">
+                    मराठी — Marathi
+                </option>
+
+                <option value="bn">
+                    বাংলা — Bengali
+                </option>
+
+                <option value="gu">
+                    ગુજરાતી — Gujarati
+                </option>
+
+            </select>
+
+
+            <button
+                type="button"
+                id="roleThemeToggle"
+                class="role-theme-toggle"
+                aria-label="Toggle theme"
+            >
+
+                <span id="roleThemeIcon">
+                    ☾
+                </span>
+
+                <span id="roleThemeLabel">
+                    Dark
+                </span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN
+         ========================================= -->
+
+    <main class="role-main">
+
+
+        <!-- INTRO -->
+        <section class="role-intro">
+
+            <div class="role-badge">
+
+                <span class="role-badge-dot"></span>
+
+                AI-Powered Civic Platform
+
+            </div>
+
+
+            <p class="role-step">
+                STEP 01 OF 04
+            </p>
+
+
+            <h1>
+                How would you like to
+                <span>continue?</span>
+            </h1>
+
+
+            <p class="role-description">
+                Choose your role to access a personalized
+                CivicAI experience designed for your needs.
+            </p>
+
+        </section>
+
+
+        <!-- =========================================
+             ROLE CARDS
+             ========================================= -->
+
+        <section
+            class="role-cards"
+            aria-label="Choose your CivicAI role"
+        >
+
+
+            <!-- =====================================
+                 CITIZEN
+                 ===================================== -->
+
+            <article
+                class="role-card"
+                data-role="citizen"
+                tabindex="0"
+            >
+
+                <div class="role-card-top">
+
+                    <div class="role-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <circle
+                                cx="12"
+                                cy="8"
+                                r="3"
+                            />
+
+                            <path
+                                d="M5 21c.7-4.1 3.1-6 7-6s6.3 1.9 7 6"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <span class="role-number">
+                        01
+                    </span>
+
+                </div>
+
+
+                <div class="role-card-content">
+
+                    <p class="role-label">
+                        FOR RESIDENTS
+                    </p>
+
+                    <h2>
+                        Citizen
+                    </h2>
+
+                    <p class="role-text">
+                        Raise concerns, access civic services,
+                        track requests and stay connected
+                        with your elected representatives.
+                    </p>
+
+
+                    <ul class="role-features">
+
+                        <li>
+                            Submit grievances
+                        </li>
+
+                        <li>
+                            Track requests
+                        </li>
+
+                        <li>
+                            Find civic services
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="role-continue"
+                    data-role-action="citizen"
+                >
+
+                    <span>
+                        Citizen Portal
+                    </span>
+
+                    <span class="role-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </article>
+
+
+
+            <!-- =====================================
+                 MP / MLA
+                 ===================================== -->
+
+            <article
+                class="role-card"
+                data-role="mpmla"
+                tabindex="0"
+            >
+
+                <div class="role-card-top">
+
+                    <div class="role-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="M3 10h18"
+                            />
+
+                            <path
+                                d="M5 10v10"
+                            />
+
+                            <path
+                                d="M19 10v10"
+                            />
+
+                            <path
+                                d="M2 20h20"
+                            />
+
+                            <path
+                                d="M4 10l8-6 8 6"
+                            />
+
+                            <path
+                                d="M8 20v-6h8v6"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <span class="role-number">
+                        02
+                    </span>
+
+                </div>
+
+
+                <div class="role-card-content">
+
+                    <p class="role-label">
+                        ELECTED REPRESENTATIVES
+                    </p>
+
+                    <h2>
+                        MP / MLA
+                    </h2>
+
+                    <p class="role-text">
+                        Monitor constituency issues,
+                        understand citizen needs and
+                        coordinate effective responses.
+                    </p>
+
+
+                    <ul class="role-features">
+
+                        <li>
+                            Constituency insights
+                        </li>
+
+                        <li>
+                            Grievance analytics
+                        </li>
+
+                        <li>
+                            Public engagement
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="role-continue"
+                    data-role-action="mpmla"
+                >
+
+                    <span>
+                        Representative Portal
+                    </span>
+
+                    <span class="role-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </article>
+
+
+
+            <!-- =====================================
+                 DEPARTMENT
+                 ===================================== -->
+
+            <article
+                class="role-card"
+                data-role="department"
+                tabindex="0"
+            >
+
+                <div class="role-card-top">
+
+                    <div class="role-icon">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+
+                            <path
+                                d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"
+                            />
+
+                            <path
+                                d="M8 7h2"
+                            />
+
+                            <path
+                                d="M14 7h2"
+                            />
+
+                            <path
+                                d="M8 11h2"
+                            />
+
+                            <path
+                                d="M14 11h2"
+                            />
+
+                            <path
+                                d="M9 21v-5h6v5"
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <span class="role-number">
+                        03
+                    </span>
+
+                </div>
+
+
+                <div class="role-card-content">
+
+                    <p class="role-label">
+                        GOVERNMENT DEPARTMENTS
+                    </p>
+
+                    <h2>
+                        Department
+                    </h2>
+
+                    <p class="role-text">
+                        Manage public requests, coordinate
+                        services and monitor constituency-level
+                        activities.
+                    </p>
+
+
+                    <ul class="role-features">
+
+                        <li>
+                            Request management
+                        </li>
+
+                        <li>
+                            Department analytics
+                        </li>
+
+                        <li>
+                            Service coordination
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="role-continue"
+                    data-role-action="department"
+                >
+
+                    <span>
+                        Department Portal
+                    </span>
+
+                    <span class="role-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </article>
+
+
+        </section>
+
+
+        <!-- =========================================
+             BOTTOM INFORMATION
+             ========================================= -->
+
+        <section class="role-bottom">
+
+            <div class="role-bottom-line"></div>
+
+            <p>
+                <span>◆</span>
+                Your role determines the tools and
+                information available in your CivicAI workspace.
+            </p>
+
+        </section>
+
+    </main>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,2386 @@
+/* =========================================================
+   CIVICAI
+   MULTILINGUAL AI CONSTITUENCY
+   MAIN APPLICATION CONTROLLER
+
+   FLOW:
+   Welcome
+      ↓
+   Role Selection
+      ↓
+   Citizen / MP-MLA / Department Login
+      ↓
+   Authentication
+      ↓
+   Role Dashboard
+
+   This controller keeps navigation, theme, language,
+   role selection and dynamic page loading connected.
+   ========================================================= */
+
+
+/* =========================================================
+   1. APPLICATION STATE
+   ========================================================= */
+
+const AppState = {
+
+    language:
+        localStorage.getItem("civicai-language") || "en",
+
+    theme:
+        localStorage.getItem("civicai-theme") || "light",
+
+    currentPage: "welcome",
+
+    currentRole:
+        sessionStorage.getItem("civicai-role") || null
+
+};
+
+
+/* =========================================================
+   2. SUPPORTED LANGUAGES
+   ========================================================= */
+
+const SupportedLanguages = {
+
+    en: "English",
+    ta: "Tamil",
+    hi: "Hindi",
+    te: "Telugu",
+    ml: "Malayalam",
+    kn: "Kannada",
+    mr: "Marathi",
+    bn: "Bengali",
+    gu: "Gujarati"
+
+};
+
+
+/* =========================================================
+   3. SUPPORTED ROLES
+   ========================================================= */
+
+const SupportedRoles = [
+    "citizen",
+    "mpmla",
+    "department"
+];
+
+
+/* =========================================================
+   4. PAGE MAP
+   ========================================================= */
+
+const PageMap = {
+
+    welcome: "pages/welcome.html",
+
+    "role-selection":
+        "pages/role-selection.html",
+
+    "citizen-login":
+        "pages/citizen-login.html",
+
+    "mpmla-login":
+        "pages/mpmla-login.html",
+
+    "department-login":
+        "pages/department-login.html",
+
+    "citizen-dashboard":
+        "pages/citizen-dashboard.html",
+
+    "mpmla-dashboard":
+        "pages/mpmla-dashboard.html",
+
+    "department-dashboard":
+        "pages/department-dashboard.html"
+
+};
+
+
+/* =========================================================
+   5. START APPLICATION
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    initializeApplication
+);
+
+
+/* =========================================================
+   6. INITIALIZE APPLICATION
+   ========================================================= */
+
+async function initializeApplication() {
+
+    console.log("CivicAI starting...");
+
+    initializeLanguage();
+
+    initializeTheme();
+
+    /*
+       Event delegation is attached once.
+       Therefore dynamically loaded buttons
+       will also work.
+    */
+
+    initializeGlobalEvents();
+
+    await loadPage("welcome");
+
+    console.log("CivicAI ready.");
+
+}
+
+
+/* =========================================================
+   7. GLOBAL EVENT HANDLER
+   ========================================================= */
+
+function initializeGlobalEvents() {
+
+    document.addEventListener(
+        "click",
+        handleGlobalClick
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        handleGlobalKeydown
+    );
+
+}
+
+
+/* =========================================================
+   8. GLOBAL CLICK HANDLER
+   ========================================================= */
+
+function handleGlobalClick(event) {
+
+    const target =
+        event.target.closest(
+            "[data-civic-action]"
+        );
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    const action =
+        target.getAttribute(
+            "data-civic-action"
+        );
+
+
+    switch (action) {
+
+
+        /* -----------------------------------------
+           NAVIGATION
+           ----------------------------------------- */
+
+        case "get-started":
+
+            event.preventDefault();
+
+            navigateTo("role-selection");
+
+            break;
+
+
+        case "role-selection":
+
+            event.preventDefault();
+
+            navigateTo("role-selection");
+
+            break;
+
+
+        case "back":
+
+            event.preventDefault();
+
+            handleBackNavigation();
+
+            break;
+
+
+        /* -----------------------------------------
+           ROLE SELECTION
+           ----------------------------------------- */
+
+        case "citizen":
+
+            event.preventDefault();
+
+            selectRole("citizen");
+
+            break;
+
+
+        case "mpmla":
+
+            event.preventDefault();
+
+            selectRole("mpmla");
+
+            break;
+
+
+        case "department":
+
+            event.preventDefault();
+
+            selectRole("department");
+
+            break;
+
+
+        /* -----------------------------------------
+           ABOUT
+           ----------------------------------------- */
+
+        case "about":
+
+            event.preventDefault();
+
+            openAboutModal();
+
+            break;
+
+
+        case "close-about":
+
+            event.preventDefault();
+
+            closeAboutModal();
+
+            break;
+
+
+        /* -----------------------------------------
+           THEME
+           ----------------------------------------- */
+
+        case "toggle-theme":
+
+            event.preventDefault();
+
+            toggleTheme();
+
+            break;
+
+
+        /* -----------------------------------------
+           MOBILE MENU
+           ----------------------------------------- */
+
+        case "mobile-menu":
+
+            event.preventDefault();
+
+            toggleMobileNavigation();
+
+            break;
+
+
+        case "close-mobile-menu":
+
+            event.preventDefault();
+
+            closeMobileNavigation();
+
+            break;
+
+
+        /* -----------------------------------------
+           BRAND HOME
+           ----------------------------------------- */
+
+        case "home":
+
+            event.preventDefault();
+
+            navigateTo("welcome");
+
+            break;
+
+
+        /* -----------------------------------------
+           LOGIN
+           ----------------------------------------- */
+
+        case "citizen-login":
+
+            event.preventDefault();
+
+            navigateTo("citizen-login");
+
+            break;
+
+
+        case "mpmla-login":
+
+            event.preventDefault();
+
+            navigateTo("mpmla-login");
+
+            break;
+
+
+        case "department-login":
+
+            event.preventDefault();
+
+            navigateTo("department-login");
+
+            break;
+
+
+        /* -----------------------------------------
+           OTP
+           ----------------------------------------- */
+
+        case "continue-otp":
+
+            event.preventDefault();
+
+            handleOTP();
+
+            break;
+
+
+        /* -----------------------------------------
+           PASSWORD
+           ----------------------------------------- */
+
+        case "toggle-password":
+
+            event.preventDefault();
+
+            togglePasswordVisibility();
+
+            break;
+
+
+        default:
+
+            console.log(
+                "Unknown CivicAI action:",
+                action
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   9. KEYBOARD EVENTS
+   ========================================================= */
+
+function handleGlobalKeydown(event) {
+
+    if (
+        event.key === "Escape"
+    ) {
+
+        closeAboutModal();
+
+        closeMobileNavigation();
+
+    }
+
+}
+
+
+/* =========================================================
+   10. LOAD PAGE
+   ========================================================= */
+
+async function loadPage(pageName) {
+
+    const app =
+        document.getElementById("app");
+
+
+    if (!app) {
+
+        console.error(
+            "CivicAI Error: #app not found."
+        );
+
+        return false;
+
+    }
+
+
+    const pagePath =
+        PageMap[pageName];
+
+
+    if (!pagePath) {
+
+        console.error(
+            `CivicAI Error: Unknown page "${pageName}".`
+        );
+
+        showPageError(pageName);
+
+        return false;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(pagePath);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Unable to load ${pagePath}`
+            );
+
+        }
+
+
+        const html =
+            await response.text();
+
+
+        app.innerHTML = html;
+
+
+        AppState.currentPage =
+            pageName;
+
+
+        /*
+           Initialize everything belonging
+           to the newly loaded page.
+        */
+
+        initializePage(pageName);
+
+        initializeSharedPageControls();
+
+        applyTheme();
+
+        updateLanguageSelectors();
+
+        closeMobileNavigation();
+
+        closeAboutModal();
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
+
+
+        console.log(
+            `CivicAI page loaded: ${pageName}`
+        );
+
+
+        return true;
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "CivicAI navigation error:",
+            error
+        );
+
+        showPageError(pageName);
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   11. PAGE ERROR
+   ========================================================= */
+
+function showPageError(pageName) {
+
+    const app =
+        document.getElementById("app");
+
+
+    if (!app) {
+
+        return;
+
+    }
+
+
+    app.innerHTML = `
+
+        <section class="civic-error-page">
+
+            <div class="civic-error-card">
+
+                <div class="civic-error-logo">
+                    ✦
+                </div>
+
+                <h1>
+                    CivicAI
+                </h1>
+
+                <h2>
+                    Page could not be loaded
+                </h2>
+
+                <p>
+                    We couldn't open the requested page.
+                </p>
+
+                <strong>
+                    ${PageMap[pageName] || pageName}
+                </strong>
+
+                <div class="civic-error-actions">
+
+                    <button
+                        type="button"
+                        data-civic-action="back"
+                    >
+                        ← Back
+                    </button>
+
+                    <button
+                        type="button"
+                        data-civic-action="home"
+                    >
+                        Go to Home
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================================================
+   12. PAGE INITIALIZATION
+   ========================================================= */
+
+function initializePage(pageName) {
+
+    switch (pageName) {
+
+
+        case "welcome":
+
+            initializeWelcomePage();
+
+            break;
+
+
+        case "role-selection":
+
+            initializeRoleSelectionPage();
+
+            break;
+
+
+        case "citizen-login":
+
+            initializeCitizenLoginPage();
+
+            break;
+
+
+        case "mpmla-login":
+
+            initializeMPMLALoginPage();
+
+            break;
+
+
+        case "department-login":
+
+            initializeDepartmentLoginPage();
+
+            break;
+
+
+        case "citizen-dashboard":
+
+            initializeCitizenDashboard();
+
+            break;
+
+
+        case "mpmla-dashboard":
+
+            initializeMPMLADashboard();
+
+            break;
+
+
+        case "department-dashboard":
+
+            initializeDepartmentDashboard();
+
+            break;
+
+
+        default:
+
+            console.log(
+                `No specific initialization for ${pageName}`
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   13. SHARED PAGE CONTROLS
+   ========================================================= */
+
+function initializeSharedPageControls() {
+
+    updateThemeUI();
+
+    updateLanguageSelectors();
+
+
+    /*
+       Desktop language selector
+    */
+
+    const languageSelector =
+        document.getElementById(
+            "languageSelector"
+        );
+
+
+    if (languageSelector) {
+
+        languageSelector.onchange =
+            function(event) {
+
+                setLanguage(
+                    event.target.value
+                );
+
+            };
+
+    }
+
+
+    /*
+       Mobile language selector
+    */
+
+    const mobileLanguageSelector =
+        document.getElementById(
+            "mobileLanguageSelector"
+        );
+
+
+    if (mobileLanguageSelector) {
+
+        mobileLanguageSelector.onchange =
+            function(event) {
+
+                setLanguage(
+                    event.target.value
+                );
+
+            };
+
+    }
+
+
+    /*
+       Theme buttons
+    */
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    if (themeToggle) {
+
+        themeToggle.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                toggleTheme();
+
+            };
+
+    }
+
+
+    const mobileThemeToggle =
+        document.getElementById(
+            "mobileThemeToggle"
+        );
+
+
+    if (mobileThemeToggle) {
+
+        mobileThemeToggle.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                toggleTheme();
+
+            };
+
+    }
+
+
+    /*
+       Mobile menu
+    */
+
+    const mobileMenuButton =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+
+    if (mobileMenuButton) {
+
+        mobileMenuButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                toggleMobileNavigation();
+
+            };
+
+    }
+
+
+    /*
+       About buttons
+    */
+
+    const aboutButton =
+        document.getElementById(
+            "aboutButton"
+        );
+
+
+    if (aboutButton) {
+
+        aboutButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                openAboutModal();
+
+            };
+
+    }
+
+
+    const closeAboutButton =
+        document.getElementById(
+            "closeAboutModal"
+        );
+
+
+    if (closeAboutButton) {
+
+        closeAboutButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                closeAboutModal();
+
+            };
+
+    }
+
+}
+
+
+/* =========================================================
+   14. WELCOME PAGE
+   ========================================================= */
+
+function initializeWelcomePage() {
+
+    console.log(
+        "Welcome page initialized."
+    );
+
+
+    const getStartedButton =
+        document.getElementById(
+            "getStartedButton"
+        );
+
+
+    if (getStartedButton) {
+
+        getStartedButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                navigateTo(
+                    "role-selection"
+                );
+
+            };
+
+    }
+
+
+    const heroAboutButton =
+        document.getElementById(
+            "heroAboutButton"
+        );
+
+
+    if (heroAboutButton) {
+
+        heroAboutButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                const aboutSection =
+                    document.getElementById(
+                        "aboutProject"
+                    );
+
+
+                if (aboutSection) {
+
+                    aboutSection.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                }
+
+            };
+
+    }
+
+
+    const brandHome =
+        document.getElementById(
+            "brandHome"
+        );
+
+
+    if (brandHome) {
+
+        brandHome.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            };
+
+    }
+
+
+    initializeAboutModal();
+
+}
+
+
+/* =========================================================
+   15. ROLE SELECTION PAGE
+   ========================================================= */
+
+function initializeRoleSelectionPage() {
+
+    console.log(
+        "Role Selection page initialized."
+    );
+
+
+    /*
+       Support different IDs/classes that may already
+       exist in your role-selection.html.
+    */
+
+    const citizenElements =
+        document.querySelectorAll(
+            "#citizenCard, #citizenRole, [data-role='citizen']"
+        );
+
+
+    citizenElements.forEach(
+        function(element) {
+
+            element.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+                    selectRole("citizen");
+
+                };
+
+            element.style.cursor = "pointer";
+
+        }
+    );
+
+
+    const mpmlaElements =
+        document.querySelectorAll(
+            "#mpmlaCard, #mpmlaRole, [data-role='mpmla']"
+        );
+
+
+    mpmlaElements.forEach(
+        function(element) {
+
+            element.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+                    selectRole("mpmla");
+
+                };
+
+            element.style.cursor = "pointer";
+
+        }
+    );
+
+
+    const departmentElements =
+        document.querySelectorAll(
+            "#departmentCard, #departmentRole, [data-role='department']"
+        );
+
+
+    departmentElements.forEach(
+        function(element) {
+
+            element.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+                    selectRole("department");
+
+                };
+
+            element.style.cursor = "pointer";
+
+        }
+    );
+
+
+    /*
+       Also support actual portal buttons.
+    */
+
+    const citizenPortal =
+        document.getElementById(
+            "citizenPortalButton"
+        );
+
+
+    if (citizenPortal) {
+
+        citizenPortal.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                selectRole("citizen");
+
+            };
+
+    }
+
+
+    const mpmlaPortal =
+        document.getElementById(
+            "mpmlaPortalButton"
+        );
+
+
+    if (mpmlaPortal) {
+
+        mpmlaPortal.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                selectRole("mpmla");
+
+            };
+
+    }
+
+
+    const departmentPortal =
+        document.getElementById(
+            "departmentPortalButton"
+        );
+
+
+    if (departmentPortal) {
+
+        departmentPortal.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                selectRole("department");
+
+            };
+
+    }
+
+}
+
+
+/* =========================================================
+   16. SELECT ROLE
+   ========================================================= */
+
+function selectRole(role) {
+
+    if (
+        !SupportedRoles.includes(role)
+    ) {
+
+        console.warn(
+            "Invalid role:",
+            role
+        );
+
+        return;
+
+    }
+
+
+    setRole(role);
+
+
+    /*
+       Role-specific navigation
+    */
+
+    switch (role) {
+
+
+        case "citizen":
+
+            navigateTo(
+                "citizen-login"
+            );
+
+            break;
+
+
+        case "mpmla":
+
+            navigateTo(
+                "mpmla-login"
+            );
+
+            break;
+
+
+        case "department":
+
+            navigateTo(
+                "department-login"
+            );
+
+            break;
+
+    }
+
+}
+
+
+/* =========================================================
+   17. CITIZEN LOGIN
+   ========================================================= */
+
+function initializeCitizenLoginPage() {
+
+    console.log(
+        "Citizen Login page initialized."
+    );
+
+
+    /*
+       Make sure the correct role exists.
+    */
+
+    setRole("citizen");
+
+
+    /*
+       Back button
+    */
+
+    initializeBackButtons();
+
+
+    /*
+       Login form
+    */
+
+    const loginForm =
+        document.getElementById(
+            "citizenLoginForm"
+        );
+
+
+    if (loginForm) {
+
+        loginForm.addEventListener(
+            "submit",
+            handleCitizenLogin
+        );
+
+    }
+
+
+    /*
+       Continue button if there is no form
+    */
+
+    const continueButton =
+        document.getElementById(
+            "citizenContinueButton"
+        );
+
+
+    if (continueButton) {
+
+        continueButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                handleCitizenLogin();
+
+            };
+
+    }
+
+
+    /*
+       OTP button
+    */
+
+    const otpButton =
+        document.getElementById(
+            "citizenOTPButton"
+        );
+
+
+    if (otpButton) {
+
+        otpButton.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                handleOTP();
+
+            };
+
+    }
+
+
+    /*
+       Password visibility
+    */
+
+    const passwordToggle =
+        document.getElementById(
+            "togglePassword"
+        );
+
+
+    if (passwordToggle) {
+
+        passwordToggle.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                togglePasswordVisibility();
+
+            };
+
+    }
+
+
+    /*
+       Create account
+    */
+
+    const createAccount =
+        document.getElementById(
+            "createCitizenAccount"
+        );
+
+
+    if (createAccount) {
+
+        createAccount.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                console.log(
+                    "Citizen account creation selected."
+                );
+
+                /*
+                   Registration page will be connected
+                   in the next stage.
+                */
+
+            };
+
+    }
+
+
+    /*
+       Forgot password
+    */
+
+    const forgotPassword =
+        document.getElementById(
+            "forgotPassword"
+        );
+
+
+    if (forgotPassword) {
+
+        forgotPassword.onclick =
+            function(event) {
+
+                event.preventDefault();
+
+                console.log(
+                    "Forgot password selected."
+                );
+
+            };
+
+    }
+
+}
+
+
+/* =========================================================
+   18. CITIZEN LOGIN HANDLER
+   ========================================================= */
+
+function handleCitizenLogin(event) {
+
+    if (
+        event &&
+        event.preventDefault
+    ) {
+
+        event.preventDefault();
+
+    }
+
+
+    const mobileInput =
+        document.getElementById(
+            "mobileNumber"
+        );
+
+
+    const passwordInput =
+        document.getElementById(
+            "password"
+        );
+
+
+    const mobile =
+        mobileInput
+            ? mobileInput.value.trim()
+            : "";
+
+
+    const password =
+        passwordInput
+            ? passwordInput.value
+            : "";
+
+
+    /*
+       Do not connect backend yet.
+       We are only validating the frontend flow.
+    */
+
+    if (!mobile) {
+
+        showLoginMessage(
+            "Please enter your mobile number."
+        );
+
+        if (mobileInput) {
+
+            mobileInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if (
+        !/^[0-9]{10}$/.test(mobile)
+    ) {
+
+        showLoginMessage(
+            "Please enter a valid 10-digit mobile number."
+        );
+
+        if (mobileInput) {
+
+            mobileInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    if (!password) {
+
+        showLoginMessage(
+            "Please enter your password."
+        );
+
+        if (passwordInput) {
+
+            passwordInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    /*
+       Temporary frontend authentication.
+       Real backend authentication will replace this.
+    */
+
+    sessionStorage.setItem(
+        "civicai-authenticated",
+        "true"
+    );
+
+
+    console.log(
+        "Citizen login successful."
+    );
+
+
+    /*
+       Only navigate if the dashboard page exists
+       in the project.
+    */
+
+    navigateTo(
+        "citizen-dashboard"
+    );
+
+}
+
+
+/* =========================================================
+   19. LOGIN MESSAGE
+   ========================================================= */
+
+function showLoginMessage(message) {
+
+    let messageElement =
+        document.getElementById(
+            "loginMessage"
+        );
+
+
+    if (!messageElement) {
+
+        messageElement =
+            document.createElement(
+                "div"
+            );
+
+        messageElement.id =
+            "loginMessage";
+
+        messageElement.setAttribute(
+            "role",
+            "alert"
+        );
+
+
+        const form =
+            document.querySelector(
+                "form"
+            );
+
+
+        if (form) {
+
+            form.prepend(
+                messageElement
+            );
+
+        } else {
+
+            const app =
+                document.getElementById(
+                    "app"
+                );
+
+            if (app) {
+
+                app.prepend(
+                    messageElement
+                );
+
+            }
+
+        }
+
+    }
+
+
+    messageElement.textContent =
+        message;
+
+}
+
+
+/* =========================================================
+   20. OTP
+   ========================================================= */
+
+function handleOTP() {
+
+    const mobileInput =
+        document.getElementById(
+            "mobileNumber"
+        );
+
+
+    const mobile =
+        mobileInput
+            ? mobileInput.value.trim()
+            : "";
+
+
+    if (
+        !/^[0-9]{10}$/.test(mobile)
+    ) {
+
+        showLoginMessage(
+            "Enter a valid 10-digit mobile number before continuing with OTP."
+        );
+
+        if (mobileInput) {
+
+            mobileInput.focus();
+
+        }
+
+        return;
+
+    }
+
+
+    console.log(
+        "OTP flow selected."
+    );
+
+
+    /*
+       OTP verification page can be connected
+       here later.
+    */
+
+}
+
+
+/* =========================================================
+   21. PASSWORD VISIBILITY
+   ========================================================= */
+
+function togglePasswordVisibility() {
+
+    const passwordInput =
+        document.getElementById(
+            "password"
+        );
+
+
+    if (!passwordInput) {
+
+        return;
+
+    }
+
+
+    if (
+        passwordInput.type === "password"
+    ) {
+
+        passwordInput.type =
+            "text";
+
+    } else {
+
+        passwordInput.type =
+            "password";
+
+    }
+
+}
+
+
+/* =========================================================
+   22. MP / MLA LOGIN
+   ========================================================= */
+
+function initializeMPMLALoginPage() {
+
+    console.log(
+        "MP / MLA Login page initialized."
+    );
+
+
+    setRole("mpmla");
+
+    initializeBackButtons();
+
+}
+
+
+/* =========================================================
+   23. DEPARTMENT LOGIN
+   ========================================================= */
+
+function initializeDepartmentLoginPage() {
+
+    console.log(
+        "Department Login page initialized."
+    );
+
+
+    setRole("department");
+
+    initializeBackButtons();
+
+}
+
+
+/* =========================================================
+   24. DASHBOARD INITIALIZERS
+   ========================================================= */
+
+function initializeCitizenDashboard() {
+
+    console.log(
+        "Citizen Dashboard initialized."
+    );
+
+    initializeBackButtons();
+
+}
+
+
+function initializeMPMLADashboard() {
+
+    console.log(
+        "MP / MLA Dashboard initialized."
+    );
+
+    initializeBackButtons();
+
+}
+
+
+function initializeDepartmentDashboard() {
+
+    console.log(
+        "Department Dashboard initialized."
+    );
+
+    initializeBackButtons();
+
+}
+
+
+/* =========================================================
+   25. BACK BUTTONS
+   ========================================================= */
+
+function initializeBackButtons() {
+
+    const backButtons =
+        document.querySelectorAll(
+            "#backButton, .back-button, [data-back]"
+        );
+
+
+    backButtons.forEach(
+        function(button) {
+
+            button.onclick =
+                function(event) {
+
+                    event.preventDefault();
+
+                    handleBackNavigation();
+
+                };
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   26. BACK NAVIGATION
+   ========================================================= */
+
+function handleBackNavigation() {
+
+    switch (
+        AppState.currentPage
+    ) {
+
+
+        case "role-selection":
+
+            navigateTo("welcome");
+
+            break;
+
+
+        case "citizen-login":
+
+            navigateTo("role-selection");
+
+            break;
+
+
+        case "mpmla-login":
+
+            navigateTo("role-selection");
+
+            break;
+
+
+        case "department-login":
+
+            navigateTo("role-selection");
+
+            break;
+
+
+        case "citizen-dashboard":
+
+            navigateTo("citizen-login");
+
+            break;
+
+
+        case "mpmla-dashboard":
+
+            navigateTo("mpmla-login");
+
+            break;
+
+
+        case "department-dashboard":
+
+            navigateTo("department-login");
+
+            break;
+
+
+        default:
+
+            navigateTo("welcome");
+
+    }
+
+}
+
+
+/* =========================================================
+   27. THEME INITIALIZATION
+   ========================================================= */
+
+function initializeTheme() {
+
+    if (
+        AppState.theme !== "light" &&
+        AppState.theme !== "dark"
+    ) {
+
+        AppState.theme =
+            "light";
+
+    }
+
+
+    applyTheme();
+
+}
+
+
+/* =========================================================
+   28. SET THEME
+   ========================================================= */
+
+function setTheme(theme) {
+
+    if (
+        theme !== "light" &&
+        theme !== "dark"
+    ) {
+
+        console.warn(
+            "Invalid theme:",
+            theme
+        );
+
+        return;
+
+    }
+
+
+    AppState.theme =
+        theme;
+
+
+    applyTheme();
+
+}
+
+
+/* =========================================================
+   29. APPLY THEME
+   ========================================================= */
+
+function applyTheme() {
+
+    document.documentElement.setAttribute(
+        "data-theme",
+        AppState.theme
+    );
+
+
+    document.body.setAttribute(
+        "data-theme",
+        AppState.theme
+    );
+
+
+    localStorage.setItem(
+        "civicai-theme",
+        AppState.theme
+    );
+
+
+    updateThemeUI();
+
+}
+
+
+/* =========================================================
+   30. TOGGLE THEME
+   ========================================================= */
+
+function toggleTheme() {
+
+    const newTheme =
+        AppState.theme === "light"
+            ? "dark"
+            : "light";
+
+
+    setTheme(
+        newTheme
+    );
+
+
+    console.log(
+        `CivicAI theme changed to ${newTheme}`
+    );
+
+}
+
+
+/* =========================================================
+   31. UPDATE THEME UI
+   ========================================================= */
+
+function updateThemeUI() {
+
+    const themeIcon =
+        document.getElementById(
+            "themeIcon"
+        );
+
+
+    const themeLabel =
+        document.getElementById(
+            "themeLabel"
+        );
+
+
+    if (themeIcon) {
+
+        themeIcon.textContent =
+            AppState.theme === "light"
+                ? "☾"
+                : "☀";
+
+    }
+
+
+    if (themeLabel) {
+
+        themeLabel.textContent =
+            AppState.theme === "light"
+                ? "Dark"
+                : "Light";
+
+    }
+
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    if (themeToggle) {
+
+        themeToggle.setAttribute(
+            "aria-label",
+            AppState.theme === "light"
+                ? "Switch to dark mode"
+                : "Switch to light mode"
+        );
+
+    }
+
+
+    const mobileThemeToggle =
+        document.getElementById(
+            "mobileThemeToggle"
+        );
+
+
+    if (mobileThemeToggle) {
+
+        mobileThemeToggle.textContent =
+            AppState.theme === "light"
+                ? "Switch to Dark Mode"
+                : "Switch to Light Mode";
+
+    }
+
+}
+
+
+/* =========================================================
+   32. LANGUAGE INITIALIZATION
+   ========================================================= */
+
+function initializeLanguage() {
+
+    if (
+        !Object.prototype.hasOwnProperty.call(
+            SupportedLanguages,
+            AppState.language
+        )
+    ) {
+
+        AppState.language =
+            "en";
+
+    }
+
+
+    localStorage.setItem(
+        "civicai-language",
+        AppState.language
+    );
+
+}
+
+
+/* =========================================================
+   33. SET LANGUAGE
+   ========================================================= */
+
+function setLanguage(language) {
+
+    if (
+        !Object.prototype.hasOwnProperty.call(
+            SupportedLanguages,
+            language
+        )
+    ) {
+
+        console.warn(
+            "Unsupported language:",
+            language
+        );
+
+        return;
+
+    }
+
+
+    AppState.language =
+        language;
+
+
+    localStorage.setItem(
+        "civicai-language",
+        language
+    );
+
+
+    updateLanguageSelectors();
+
+
+    /*
+       Actual text translation will be connected
+       after the complete page structure is ready.
+    */
+
+    console.log(
+        `CivicAI language:
+        ${SupportedLanguages[language]}`
+    );
+
+}
+
+
+/* =========================================================
+   34. UPDATE LANGUAGE SELECTORS
+   ========================================================= */
+
+function updateLanguageSelectors() {
+
+    const selectors =
+        document.querySelectorAll(
+            "#languageSelector, #mobileLanguageSelector"
+        );
+
+
+    selectors.forEach(
+        function(selector) {
+
+            if (
+                SupportedLanguages[
+                    AppState.language
+                ]
+            ) {
+
+                selector.value =
+                    AppState.language;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   35. ABOUT MODAL
+   ========================================================= */
+
+function initializeAboutModal() {
+
+    const modal =
+        document.getElementById(
+            "aboutModal"
+        );
+
+
+    if (!modal) {
+
+        return;
+
+    }
+
+
+    modal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeAboutModal();
+
+            }
+
+        }
+    );
+
+}
+
+
+function openAboutModal() {
+
+    const modal =
+        document.getElementById(
+            "aboutModal"
+        );
+
+
+    if (!modal) {
+
+        return;
+
+    }
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    modal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+
+    const closeButton =
+        document.getElementById(
+            "closeAboutModal"
+        );
+
+
+    if (closeButton) {
+
+        setTimeout(
+            function() {
+
+                closeButton.focus();
+
+            },
+            100
+        );
+
+    }
+
+}
+
+
+function closeAboutModal() {
+
+    const modal =
+        document.getElementById(
+            "aboutModal"
+        );
+
+
+    if (!modal) {
+
+        return;
+
+    }
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+
+    modal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+
+/* =========================================================
+   36. MOBILE NAVIGATION
+   ========================================================= */
+
+function toggleMobileNavigation() {
+
+    const navigation =
+        document.getElementById(
+            "mobileNavigation"
+        );
+
+
+    const button =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+
+    if (!navigation) {
+
+        return;
+
+    }
+
+
+    const isOpen =
+        navigation.classList.toggle(
+            "active"
+        );
+
+
+    if (button) {
+
+        button.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+    }
+
+}
+
+
+function closeMobileNavigation() {
+
+    const navigation =
+        document.getElementById(
+            "mobileNavigation"
+        );
+
+
+    const button =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+
+    if (navigation) {
+
+        navigation.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    if (button) {
+
+        button.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   37. ROLE MANAGEMENT
+   ========================================================= */
+
+function setRole(role) {
+
+    if (
+        !SupportedRoles.includes(role)
+    ) {
+
+        console.warn(
+            "Invalid role:",
+            role
+        );
+
+        return;
+
+    }
+
+
+    AppState.currentRole =
+        role;
+
+
+    sessionStorage.setItem(
+        "civicai-role",
+        role
+    );
+
+
+    console.log(
+        `CivicAI role selected: ${role}`
+    );
+
+}
+
+
+/* =========================================================
+   38. NAVIGATION
+   ========================================================= */
+
+async function navigateTo(pageName) {
+
+    if (
+        !PageMap[pageName]
+    ) {
+
+        console.error(
+            `Cannot navigate. Page "${pageName}" is not registered.`
+        );
+
+        return false;
+
+    }
+
+
+    closeMobileNavigation();
+
+    closeAboutModal();
+
+
+    return await loadPage(
+        pageName
+    );
+
+}
+
+
+/* =========================================================
+   39. GLOBAL CIVICAI API
+   ========================================================= */
+
+window.CivicAI = {
+
+    state:
+        AppState,
+
+    languages:
+        SupportedLanguages,
+
+    roles:
+        SupportedRoles,
+
+    pages:
+        PageMap,
+
+    loadPage:
+        loadPage,
+
+    navigateTo:
+        navigateTo,
+
+    setTheme:
+        setTheme,
+
+    toggleTheme:
+        toggleTheme,
+
+    setLanguage:
+        setLanguage,
+
+    setRole:
+        setRole,
+
+    selectRole:
+        selectRole,
+
+    openAboutModal:
+        openAboutModal,
+
+    closeAboutModal:
+        closeAboutModal,
+
+    handleBackNavigation:
+        handleBackNavigation
+
+};
+
+
+/* =========================================================
+   END OF CIVICAI APP CONTROLLER
+   ========================================================= */

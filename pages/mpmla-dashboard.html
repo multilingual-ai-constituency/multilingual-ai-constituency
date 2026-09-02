@@ -1,0 +1,4042 @@
+<section
+    class="dashboard-page mpmla-dashboard-page"
+    data-role-page="mpmla"
+>
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="dashboard-header mpmla-header">
+
+        <div class="dashboard-brand-wrap">
+
+            <button
+                type="button"
+                class="dashboard-brand"
+                data-civic-action="home"
+            >
+
+                <span class="dashboard-brand-mark">
+                    M
+                </span>
+
+                <span class="dashboard-brand-copy">
+
+                    <strong>
+                        CivicAI
+                    </strong>
+
+                    <small>
+                        Representative Console
+                    </small>
+
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="dashboard-header-actions">
+
+            <button
+                type="button"
+                class="dashboard-action-pill"
+                id="themeToggle"
+                data-civic-action="toggle-theme"
+            >
+                <span id="themeIcon">☀</span>
+                <span id="themeLabel">Light</span>
+            </button>
+
+
+            <select
+                id="languageSelector"
+                class="dashboard-language"
+            >
+                <option value="en">English</option>
+                <option value="ta">தமிழ்</option>
+                <option value="hi">हिन्दी</option>
+                <option value="te">తెలుగు</option>
+                <option value="ml">മലയാളം</option>
+                <option value="kn">ಕನ್ನಡ</option>
+                <option value="mr">मराठी</option>
+                <option value="bn">বাংলা</option>
+                <option value="gu">ગુજરાતી</option>
+            </select>
+
+
+            <button
+                type="button"
+                class="dashboard-notification"
+                id="mpmlaNotificationButton"
+                aria-label="Open notifications"
+            >
+                <span>🔔</span>
+                <em id="notificationBadge">3</em>
+            </button>
+
+
+            <button
+                type="button"
+                class="dashboard-logout"
+                data-civic-action="logout"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         LAYOUT
+    ========================================================== -->
+
+    <div class="dashboard-layout mpmla-layout">
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside class="dashboard-sidebar mpmla-sidebar">
+
+            <p class="sidebar-label">
+                Representative workspace
+            </p>
+
+
+            <nav
+                class="sidebar-nav"
+                id="mpmlaSidebarNav"
+            >
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item active"
+                    data-mpmla-view="overview"
+                >
+                    <span class="mpmla-nav-icon">◈</span>
+                    <span>Overview</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="grievances"
+                >
+                    <span class="mpmla-nav-icon">▤</span>
+                    <span>Citizen Grievances</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="analytics"
+                >
+                    <span class="mpmla-nav-icon">▥</span>
+                    <span>Constituency Analytics</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="issues"
+                >
+                    <span class="mpmla-nav-icon">⚠</span>
+                    <span>Top Issues &amp; Trends</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="departments"
+                >
+                    <span class="mpmla-nav-icon">▦</span>
+                    <span>Department Performance</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="areas"
+                >
+                    <span class="mpmla-nav-icon">⌖</span>
+                    <span>Area Problem Analysis</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="ai"
+                >
+                    <span class="mpmla-nav-icon">✦</span>
+                    <span>AI-Powered Insights</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="reports"
+                >
+                    <span class="mpmla-nav-icon">▧</span>
+                    <span>Reports &amp; Export</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="notifications"
+                >
+                    <span class="mpmla-nav-icon">♢</span>
+                    <span>Notifications</span>
+                    <em class="mpmla-count">3</em>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="profile"
+                >
+                    <span class="mpmla-nav-icon">◉</span>
+                    <span>Profile</span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="sidebar-nav-item"
+                    data-mpmla-view="settings"
+                >
+                    <span class="mpmla-nav-icon">⚙</span>
+                    <span>Settings</span>
+                </button>
+
+            </nav>
+
+
+            <!-- AI ENGINE -->
+
+            <div class="mpmla-engine">
+
+                <div class="mpmla-engine-icon">
+                    ✦
+                </div>
+
+                <div>
+                    <strong>CivicAI Engine</strong>
+                    <small>AI processing active</small>
+                </div>
+
+                <span></span>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+
+        <main class="dashboard-main mpmla-main">
+
+            <div
+                id="mpmlaDashboardContent"
+                class="mpmla-content"
+            ></div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         COMPLETE MP / MLA UI
+    ========================================================== -->
+
+    <style>
+
+        .mpmla-dashboard-page {
+
+            --mp-blue:
+                #4a90e2;
+
+            --mp-blue-2:
+                #6eb5ff;
+
+            --mp-purple:
+                #8458b3;
+
+            --mp-green:
+                #278b68;
+
+            --mp-red:
+                #d85a67;
+
+            --mp-yellow:
+                #d89b35;
+
+            min-height:
+                100vh;
+
+            background:
+                radial-gradient(
+                    circle at 85% 0%,
+                    rgba(74,144,226,.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 10% 90%,
+                    rgba(132,88,179,.06),
+                    transparent 25%
+                ),
+                var(--background);
+
+            color:
+                var(--text-primary);
+
+        }
+
+
+        .mpmla-dashboard-page *,
+        .mpmla-dashboard-page *::before,
+        .mpmla-dashboard-page *::after {
+
+            box-sizing:
+                border-box;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .mpmla-dashboard-page
+        .dashboard-header {
+
+            min-height:
+                78px;
+
+            padding:
+                15px
+                clamp(18px,3vw,40px);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+
+            background:
+                var(--surface);
+
+            border-bottom:
+                1px solid var(--border);
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                100;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-brand {
+
+            border:
+                0;
+
+            background:
+                transparent;
+
+            padding:
+                0;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            color:
+                var(--text-primary);
+
+            font-family:
+                inherit;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-brand-mark {
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                13px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(74,144,226,.22);
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-brand-copy {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                flex-start;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-brand-copy strong {
+
+            font-size:
+                19px;
+
+            line-height:
+                1;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-brand-copy small {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           HEADER ACTIONS
+        ====================================================== */
+
+        .mpmla-dashboard-page
+        .dashboard-header-actions {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-action-pill,
+        .mpmla-dashboard-page
+        .dashboard-language,
+        .mpmla-dashboard-page
+        .dashboard-notification,
+        .mpmla-dashboard-page
+        .dashboard-logout {
+
+            appearance:
+                none;
+
+            min-height:
+                40px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                11px;
+
+            background:
+                var(--surface);
+
+            color:
+                var(--text-primary);
+
+            font-family:
+                inherit;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-action-pill {
+
+            padding:
+                0 12px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-language {
+
+            min-width:
+                112px;
+
+            padding:
+                0 9px;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-notification {
+
+            width:
+                40px;
+
+            padding:
+                0;
+
+            position:
+                relative;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-notification em {
+
+            position:
+                absolute;
+
+            top:
+                -6px;
+
+            right:
+                -5px;
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--mp-red);
+
+            color:
+                white;
+
+            font-style:
+                normal;
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .dashboard-logout {
+
+            padding:
+                0 13px;
+
+            color:
+                var(--mp-red);
+
+            border-color:
+                rgba(216,90,103,.16);
+
+            background:
+                rgba(216,90,103,.06);
+
+        }
+
+
+        /* =====================================================
+           LAYOUT
+        ====================================================== */
+
+        .mpmla-layout {
+
+            min-height:
+                calc(100vh - 78px);
+
+            display:
+                grid;
+
+            grid-template-columns:
+                255px minmax(0,1fr);
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ====================================================== */
+
+        .mpmla-dashboard-page
+        .dashboard-sidebar {
+
+            width:
+                255px;
+
+            padding:
+                23px 14px;
+
+            background:
+                var(--surface-soft);
+
+            border-right:
+                1px solid var(--border);
+
+        }
+
+
+        .mpmla-dashboard-page
+        .sidebar-label {
+
+            margin:
+                0 5px 13px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+            letter-spacing:
+                1.2px;
+
+            text-transform:
+                uppercase;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .sidebar-nav {
+
+            display:
+                grid;
+
+            gap:
+                5px;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .sidebar-nav-item {
+
+            width:
+                100%;
+
+            min-height:
+                43px;
+
+            padding:
+                0 10px;
+
+            border:
+                1px solid transparent;
+
+            border-radius:
+                11px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            background:
+                transparent;
+
+            color:
+                var(--text-primary);
+
+            font-family:
+                inherit;
+
+            font-size:
+                10px;
+
+            font-weight:
+                600;
+
+            text-align:
+                left;
+
+            cursor:
+                pointer;
+
+            transition:
+                all .18s ease;
+
+        }
+
+
+        .mpmla-dashboard-page
+        .sidebar-nav-item:hover {
+
+            transform:
+                translateX(2px);
+
+            background:
+                rgba(74,144,226,.055);
+
+            border-color:
+                rgba(74,144,226,.10);
+
+        }
+
+
+        .mpmla-dashboard-page
+        .sidebar-nav-item.active {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(74,144,226,.12),
+                    rgba(132,88,179,.05)
+                );
+
+            border-color:
+                rgba(74,144,226,.17);
+
+            color:
+                var(--mp-blue);
+
+            box-shadow:
+                inset 3px 0 0
+                var(--mp-blue);
+
+        }
+
+
+        .mpmla-nav-icon {
+
+            width:
+                28px;
+
+            height:
+                28px;
+
+            min-width:
+                28px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                9px;
+
+            color:
+                var(--text-muted);
+
+        }
+
+
+        .sidebar-nav-item.active
+        .mpmla-nav-icon {
+
+            color:
+                var(--mp-blue);
+
+            background:
+                rgba(74,144,226,.08);
+
+        }
+
+
+        .mpmla-count {
+
+            width:
+                18px;
+
+            height:
+                18px;
+
+            margin-left:
+                auto;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(216,90,103,.11);
+
+            color:
+                var(--mp-red);
+
+            font-size:
+                8px;
+
+            font-style:
+                normal;
+
+            font-weight:
+                800;
+
+        }
+
+
+        /* ENGINE */
+
+        .mpmla-engine {
+
+            margin-top:
+                23px;
+
+            padding:
+                12px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            border:
+                1px solid
+                rgba(132,88,179,.16);
+
+            border-radius:
+                15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(132,88,179,.08),
+                    rgba(74,144,226,.04)
+                );
+
+        }
+
+
+        .mpmla-engine-icon {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            min-width:
+                34px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            color:
+                white;
+
+        }
+
+
+        .mpmla-engine strong {
+
+            display:
+                block;
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-engine small {
+
+            display:
+                block;
+
+            margin-top:
+                2px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .mpmla-engine > span {
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            margin-left:
+                auto;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--mp-green);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(39,139,104,.09);
+
+        }
+
+
+        /* =====================================================
+           MAIN
+        ====================================================== */
+
+        .mpmla-dashboard-page
+        .dashboard-main {
+
+            min-width:
+                0;
+
+            padding:
+                clamp(20px,2.5vw,34px);
+
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(74,144,226,.045),
+                    transparent 25%
+                ),
+                var(--background);
+
+        }
+
+
+        .mpmla-content {
+
+            width:
+                100%;
+
+            max-width:
+                1600px;
+
+            margin:
+                auto;
+
+        }
+
+
+        /* =====================================================
+           GENERAL VIEW
+        ====================================================== */
+
+        .mpmla-view {
+
+            display:
+                grid;
+
+            gap:
+                17px;
+
+            animation:
+                mpmlaFade .25s ease;
+
+        }
+
+
+        @keyframes mpmlaFade {
+
+            from {
+
+                opacity:
+                    0;
+
+                transform:
+                    translateY(6px);
+
+            }
+
+            to {
+
+                opacity:
+                    1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        .mpmla-heading {
+
+            padding:
+                3px 1px;
+
+        }
+
+
+        .mpmla-eyebrow {
+
+            display:
+                inline-flex;
+
+            padding:
+                6px 9px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(74,144,226,.08);
+
+            color:
+                var(--mp-blue);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1.1px;
+
+        }
+
+
+        .mpmla-heading h1 {
+
+            margin:
+                9px 0 0;
+
+            font-size:
+                clamp(25px,3vw,35px);
+
+            line-height:
+                1.08;
+
+            letter-spacing:
+                -1px;
+
+        }
+
+
+        .mpmla-heading p {
+
+            margin:
+                8px 0 0;
+
+            max-width:
+                740px;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                11px;
+
+            line-height:
+                1.65;
+
+        }
+
+
+        /* =====================================================
+           WELCOME
+        ====================================================== */
+
+        .mpmla-welcome {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                29px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(74,144,226,.11),
+                    rgba(132,88,179,.07),
+                    var(--surface)
+                );
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-welcome::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                180px;
+
+            height:
+                180px;
+
+            right:
+                -55px;
+
+            top:
+                -85px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(74,144,226,.08);
+
+        }
+
+
+        .mpmla-welcome-tag {
+
+            display:
+                inline-flex;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(74,144,226,.08);
+
+            color:
+                var(--mp-blue);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .mpmla-welcome h1 {
+
+            margin:
+                13px 0 0;
+
+            font-size:
+                clamp(27px,3vw,37px);
+
+            letter-spacing:
+                -1.2px;
+
+        }
+
+
+        .mpmla-welcome p {
+
+            margin:
+                8px 0 0;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* =====================================================
+           STAT CARDS
+        ====================================================== */
+
+        .mpmla-stat-grid,
+        .mpmla-kpi-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4,minmax(0,1fr));
+
+            gap:
+                14px;
+
+        }
+
+
+        .mpmla-stat-card,
+        .mpmla-kpi {
+
+            min-height:
+                139px;
+
+            padding:
+                18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                17px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease;
+
+        }
+
+
+        .mpmla-stat-card:hover,
+        .mpmla-kpi:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                var(--shadow-md);
+
+        }
+
+
+        .mpmla-stat-icon {
+
+            width:
+                37px;
+
+            height:
+                37px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                11px;
+
+            background:
+                rgba(74,144,226,.08);
+
+            color:
+                var(--mp-blue);
+
+        }
+
+
+        .mpmla-stat-card small,
+        .mpmla-kpi small {
+
+            display:
+                block;
+
+            margin-top:
+                13px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+            letter-spacing:
+                .9px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .mpmla-stat-card strong,
+        .mpmla-kpi strong {
+
+            display:
+                block;
+
+            margin-top:
+                6px;
+
+            font-size:
+                29px;
+
+        }
+
+
+        .mpmla-stat-card span,
+        .mpmla-kpi span {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+        }
+
+
+        /* =====================================================
+           PANELS
+        ====================================================== */
+
+        .mpmla-two-column {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(0,1.35fr)
+                minmax(320px,1fr);
+
+            gap:
+                17px;
+
+        }
+
+
+        .mpmla-panel,
+        .mpmla-chart-panel {
+
+            min-width:
+                0;
+
+            padding:
+                21px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                19px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-panel-head {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+            margin-bottom:
+                16px;
+
+        }
+
+
+        .mpmla-panel-head h3 {
+
+            margin:
+                0;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .mpmla-pill {
+
+            min-height:
+                24px;
+
+            padding:
+                0 9px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border:
+                1px solid
+                rgba(132,88,179,.14);
+
+            border-radius:
+                999px;
+
+            color:
+                var(--mp-purple);
+
+            background:
+                rgba(132,88,179,.07);
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                .8px;
+
+        }
+
+
+        /* =====================================================
+           ISSUE LIST
+        ====================================================== */
+
+        .mpmla-issue-list {
+
+            display:
+                grid;
+
+            gap:
+                10px;
+
+        }
+
+
+        .mpmla-issue {
+
+            padding:
+                13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .mpmla-issue-top {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+        }
+
+
+        .mpmla-issue-top strong {
+
+            font-size:
+                11px;
+
+        }
+
+
+        .mpmla-issue-top span {
+
+            color:
+                var(--mp-blue);
+
+            font-size:
+                10px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-progress {
+
+            height:
+                6px;
+
+            margin-top:
+                9px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                999px;
+
+            background:
+                var(--border);
+
+        }
+
+
+        .mpmla-progress span {
+
+            display:
+                block;
+
+            height:
+                100%;
+
+            border-radius:
+                inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+        }
+
+
+        /* =====================================================
+           DEPARTMENT MINI CARDS
+        ====================================================== */
+
+        .mpmla-dept-list {
+
+            display:
+                grid;
+
+            gap:
+                9px;
+
+        }
+
+
+        .mpmla-dept-row {
+
+            padding:
+                13px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .mpmla-dept-row strong {
+
+            display:
+                block;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .mpmla-dept-row small {
+
+            display:
+                block;
+
+            margin-top:
+                3px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mpmla-dept-score {
+
+            color:
+                var(--mp-blue);
+
+            font-size:
+                14px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        /* =====================================================
+           GRIEVANCES
+        ====================================================== */
+
+        .mpmla-grievance-grid {
+
+            display:
+                grid;
+
+            gap:
+                10px;
+
+        }
+
+
+        .mpmla-grievance-card {
+
+            padding:
+                16px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1fr auto;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                15px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-grievance-card h3 {
+
+            margin:
+                0;
+
+            font-size:
+                13px;
+
+        }
+
+
+        .mpmla-grievance-card p {
+
+            margin:
+                5px 0 0;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-grievance-meta {
+
+            margin-top:
+                8px;
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                6px;
+
+        }
+
+
+        .mpmla-chip {
+
+            min-height:
+                22px;
+
+            padding:
+                0 8px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            border-radius:
+                999px;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                7px;
+
+        }
+
+
+        .mpmla-open-button {
+
+            min-height:
+                34px;
+
+            padding:
+                0 12px;
+
+            border:
+                0;
+
+            border-radius:
+                10px;
+
+            color:
+                var(--mp-purple);
+
+            background:
+                rgba(132,88,179,.09);
+
+            font-family:
+                inherit;
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        /* =====================================================
+           STATUS
+        ====================================================== */
+
+        .mpmla-status {
+
+            min-height:
+                23px;
+
+            padding:
+                0 8px;
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            border-radius:
+                999px;
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-status.pending {
+
+            color:
+                var(--mp-blue);
+
+            background:
+                rgba(74,144,226,.10);
+
+        }
+
+
+        .mpmla-status.progress {
+
+            color:
+                var(--mp-yellow);
+
+            background:
+                rgba(216,155,53,.11);
+
+        }
+
+
+        .mpmla-status.resolved {
+
+            color:
+                var(--mp-green);
+
+            background:
+                rgba(39,139,104,.10);
+
+        }
+
+
+        /* =====================================================
+           ANALYTICS BAR CHART
+        ====================================================== */
+
+        .mpmla-chart {
+
+            height:
+                340px;
+
+            padding:
+                20px 18px 10px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(6,minmax(0,1fr));
+
+            align-items:
+                end;
+
+            gap:
+                15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                17px;
+
+            background:
+                linear-gradient(
+                    to top,
+                    var(--surface-soft),
+                    rgba(74,144,226,.02)
+                );
+
+        }
+
+
+        .mpmla-bar-group {
+
+            height:
+                100%;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                flex-end;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+        }
+
+
+        .mpmla-bar-value {
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-bar-track {
+
+            width:
+                min(48px,70%);
+
+            height:
+                245px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                11px 11px 5px 5px;
+
+            background:
+                rgba(74,144,226,.06);
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+        }
+
+
+        .mpmla-bar {
+
+            width:
+                100%;
+
+            border-radius:
+                11px 11px 4px 4px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--mp-blue-2),
+                    var(--mp-blue) 55%,
+                    var(--mp-purple)
+                );
+
+            box-shadow:
+                0 0 15px
+                rgba(74,144,226,.20);
+
+        }
+
+
+        .mpmla-bar-label {
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mpmla-chart-summary {
+
+            margin-top:
+                14px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap:
+                10px;
+
+        }
+
+
+        .mpmla-summary {
+
+            padding:
+                12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .mpmla-summary small {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                7px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .mpmla-summary strong {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            font-size:
+                16px;
+
+        }
+
+
+        /* =====================================================
+           TIMELINE
+        ====================================================== */
+
+        .mpmla-timeline {
+
+            position:
+                relative;
+
+            display:
+                grid;
+
+            gap:
+                0;
+
+        }
+
+
+        .mpmla-timeline::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            left:
+                14px;
+
+            top:
+                8px;
+
+            bottom:
+                8px;
+
+            width:
+                2px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            opacity:
+                .35;
+
+        }
+
+
+        .mpmla-timeline-item {
+
+            position:
+                relative;
+
+            padding:
+                0 0 23px 43px;
+
+        }
+
+
+        .mpmla-timeline-dot {
+
+            position:
+                absolute;
+
+            left:
+                7px;
+
+            top:
+                3px;
+
+            width:
+                16px;
+
+            height:
+                16px;
+
+            border:
+                3px solid var(--surface);
+
+            border-radius:
+                50%;
+
+            background:
+                var(--mp-blue);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(74,144,226,.10);
+
+        }
+
+
+        .mpmla-timeline-item.complete
+        .mpmla-timeline-dot {
+
+            background:
+                var(--mp-green);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(39,139,104,.10);
+
+        }
+
+
+        .mpmla-timeline-item.warning
+        .mpmla-timeline-dot {
+
+            background:
+                var(--mp-yellow);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(216,155,53,.10);
+
+        }
+
+
+        .mpmla-timeline-card {
+
+            padding:
+                13px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .mpmla-timeline-card strong {
+
+            font-size:
+                11px;
+
+        }
+
+
+        .mpmla-timeline-card small {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           DEPARTMENT 3D
+        ====================================================== */
+
+        .mpmla-3d-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2,minmax(0,1fr));
+
+            gap:
+                18px;
+
+        }
+
+
+        .mpmla-3d-card {
+
+            position:
+                relative;
+
+            min-height:
+                220px;
+
+            padding:
+                22px;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid
+                rgba(74,144,226,.19);
+
+            border-radius:
+                22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    var(--surface),
+                    var(--surface-soft)
+                );
+
+            box-shadow:
+                0 8px 0
+                rgba(74,144,226,.025),
+                0 24px 50px
+                rgba(35,50,75,.12);
+
+            transform:
+                translateZ(0);
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+
+        }
+
+
+        .mpmla-3d-card:hover {
+
+            transform:
+                translateY(-7px)
+                perspective(900px)
+                rotateX(2deg)
+                rotateY(-1deg);
+
+            box-shadow:
+                0 12px 0
+                rgba(74,144,226,.03),
+                0 35px 70px
+                rgba(35,50,75,.17);
+
+        }
+
+
+        .mpmla-3d-card::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                150px;
+
+            height:
+                150px;
+
+            right:
+                -75px;
+
+            bottom:
+                -75px;
+
+            border-radius:
+                50%;
+
+            background:
+                rgba(74,144,226,.06);
+
+        }
+
+
+        .mpmla-3d-top {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            gap:
+                12px;
+
+        }
+
+
+        .mpmla-3d-icon {
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                14px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            box-shadow:
+                0 12px 25px
+                rgba(74,144,226,.22);
+
+        }
+
+
+        .mpmla-3d-score {
+
+            color:
+                var(--mp-green);
+
+            background:
+                rgba(39,139,104,.09);
+
+            padding:
+                6px 9px;
+
+            height:
+                fit-content;
+
+            border-radius:
+                999px;
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mpmla-3d-card h3 {
+
+            margin:
+                16px 0 0;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .mpmla-3d-card > p {
+
+            margin:
+                6px 0 0;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-3d-progress {
+
+            margin-top:
+                20px;
+
+        }
+
+
+        .mpmla-3d-progress-head {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mpmla-3d-track {
+
+            height:
+                9px;
+
+            margin-top:
+                8px;
+
+            overflow:
+                hidden;
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(74,144,226,.07);
+
+        }
+
+
+        .mpmla-3d-track span {
+
+            display:
+                block;
+
+            height:
+                100%;
+
+            border-radius:
+                inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            box-shadow:
+                0 0 12px
+                rgba(74,144,226,.22);
+
+        }
+
+
+        .mpmla-3d-footer {
+
+            margin-top:
+                15px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           AREA CARDS
+        ====================================================== */
+
+        .mpmla-area-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap:
+                15px;
+
+        }
+
+
+        .mpmla-area-card {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                20px;
+
+            min-height:
+                155px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                18px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-area-card::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                90px;
+
+            height:
+                90px;
+
+            right:
+                -35px;
+
+            bottom:
+                -35px;
+
+            border:
+                1px solid
+                rgba(74,144,226,.12);
+
+            border-radius:
+                50%;
+
+        }
+
+
+        .mpmla-area-card span {
+
+            color:
+                var(--mp-blue);
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        .mpmla-area-card strong {
+
+            display:
+                block;
+
+            margin-top:
+                9px;
+
+            font-size:
+                31px;
+
+        }
+
+
+        .mpmla-area-card small {
+
+            display:
+                block;
+
+            margin-top:
+                5px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                9px;
+
+        }
+
+
+        /* =====================================================
+           AI GLOWING CARDS
+        ====================================================== */
+
+        .mpmla-ai-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2,minmax(0,1fr));
+
+            gap:
+                18px;
+
+        }
+
+
+        .mpmla-ai-card {
+
+            position:
+                relative;
+
+            min-height:
+                205px;
+
+            padding:
+                21px;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid;
+
+            border-radius:
+                21px;
+
+        }
+
+
+        .mpmla-ai-card::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            inset:
+                -2px;
+
+            border-radius:
+                inherit;
+
+            opacity:
+                .35;
+
+            filter:
+                blur(12px);
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .mpmla-ai-card.positive {
+
+            border-color:
+                rgba(39,139,104,.26);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(39,139,104,.12),
+                    var(--surface)
+                );
+
+            box-shadow:
+                0 0 30px
+                rgba(39,139,104,.10);
+
+        }
+
+
+        .mpmla-ai-card.positive::before {
+
+            background:
+                rgba(39,139,104,.18);
+
+        }
+
+
+        .mpmla-ai-card.warning {
+
+            border-color:
+                rgba(216,155,53,.28);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(216,155,53,.12),
+                    var(--surface)
+                );
+
+            box-shadow:
+                0 0 30px
+                rgba(216,155,53,.10);
+
+        }
+
+
+        .mpmla-ai-card.warning::before {
+
+            background:
+                rgba(216,155,53,.17);
+
+        }
+
+
+        .mpmla-ai-card.critical {
+
+            border-color:
+                rgba(216,90,103,.30);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(216,90,103,.13),
+                    var(--surface)
+                );
+
+            box-shadow:
+                0 0 32px
+                rgba(216,90,103,.12);
+
+        }
+
+
+        .mpmla-ai-card.critical::before {
+
+            background:
+                rgba(216,90,103,.18);
+
+        }
+
+
+        .mpmla-ai-card.recommendation {
+
+            border-color:
+                rgba(132,88,179,.27);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(132,88,179,.12),
+                    var(--surface)
+                );
+
+            box-shadow:
+                0 0 30px
+                rgba(132,88,179,.10);
+
+        }
+
+
+        .mpmla-ai-card.recommendation::before {
+
+            background:
+                rgba(132,88,179,.18);
+
+        }
+
+
+        .mpmla-ai-inner {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+        }
+
+
+        .mpmla-ai-head {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                flex-start;
+
+        }
+
+
+        .mpmla-ai-icon {
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                13px;
+
+            color:
+                white;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .positive
+        .mpmla-ai-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #278b68,
+                    #4eae8a
+                );
+
+            box-shadow:
+                0 0 22px
+                rgba(39,139,104,.30);
+
+        }
+
+
+        .warning
+        .mpmla-ai-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d89b35,
+                    #edb657
+                );
+
+            box-shadow:
+                0 0 22px
+                rgba(216,155,53,.28);
+
+        }
+
+
+        .critical
+        .mpmla-ai-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #d85a67,
+                    #ee7b85
+                );
+
+            box-shadow:
+                0 0 23px
+                rgba(216,90,103,.30);
+
+        }
+
+
+        .recommendation
+        .mpmla-ai-icon {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-purple),
+                    var(--mp-blue)
+                );
+
+            box-shadow:
+                0 0 23px
+                rgba(132,88,179,.27);
+
+        }
+
+
+        .mpmla-ai-status {
+
+            padding:
+                6px 8px;
+
+            border-radius:
+                999px;
+
+            font-size:
+                7px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .positive
+        .mpmla-ai-status {
+
+            color:
+                var(--mp-green);
+
+            background:
+                rgba(39,139,104,.09);
+
+        }
+
+
+        .warning
+        .mpmla-ai-status {
+
+            color:
+                #9d6a09;
+
+            background:
+                rgba(216,155,53,.10);
+
+        }
+
+
+        .critical
+        .mpmla-ai-status {
+
+            color:
+                var(--mp-red);
+
+            background:
+                rgba(216,90,103,.09);
+
+        }
+
+
+        .recommendation
+        .mpmla-ai-status {
+
+            color:
+                var(--mp-purple);
+
+            background:
+                rgba(132,88,179,.09);
+
+        }
+
+
+        .mpmla-ai-card h3 {
+
+            margin:
+                16px 0 0;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .mpmla-ai-card p {
+
+            margin:
+                7px 0 0;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+            line-height:
+                1.65;
+
+        }
+
+
+        .mpmla-ai-footer {
+
+            margin-top:
+                16px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           NOTIFICATIONS
+        ====================================================== */
+
+        .mpmla-notification-list {
+
+            display:
+                grid;
+
+            gap:
+                12px;
+
+        }
+
+
+        .mpmla-notification-card {
+
+            position:
+                relative;
+
+            padding:
+                17px;
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            gap:
+                13px;
+
+            overflow:
+                hidden;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                17px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-notification-card.unread {
+
+            border-color:
+                rgba(74,144,226,.23);
+
+        }
+
+
+        .mpmla-notification-card.green {
+
+            border-left:
+                4px solid
+                var(--mp-green);
+
+            box-shadow:
+                0 0 18px
+                rgba(39,139,104,.07);
+
+        }
+
+
+        .mpmla-notification-card.red {
+
+            border-left:
+                4px solid
+                var(--mp-red);
+
+            box-shadow:
+                0 0 18px
+                rgba(216,90,103,.08);
+
+        }
+
+
+        .mpmla-notification-card.yellow {
+
+            border-left:
+                4px solid
+                var(--mp-yellow);
+
+            box-shadow:
+                0 0 18px
+                rgba(216,155,53,.07);
+
+        }
+
+
+        .mpmla-notification-card.blue {
+
+            border-left:
+                4px solid
+                var(--mp-blue);
+
+            box-shadow:
+                0 0 18px
+                rgba(74,144,226,.07);
+
+        }
+
+
+        .mpmla-notification-icon {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            min-width:
+                42px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                12px;
+
+            background:
+                rgba(74,144,226,.08);
+
+        }
+
+
+        .mpmla-notification-card h3 {
+
+            margin:
+                0;
+
+            font-size:
+                12px;
+
+        }
+
+
+        .mpmla-notification-card p {
+
+            margin:
+                5px 0 0;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        .mpmla-notification-card small {
+
+            display:
+                block;
+
+            margin-top:
+                6px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE READ ONLY
+        ====================================================== */
+
+        .mpmla-profile-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                285px minmax(0,1fr);
+
+            gap:
+                17px;
+
+        }
+
+
+        .mpmla-profile-card {
+
+            padding:
+                23px;
+
+            text-align:
+                center;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                19px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-avatar {
+
+            width:
+                88px;
+
+            height:
+                88px;
+
+            margin:
+                0 auto 16px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                25px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            font-size:
+                30px;
+
+            font-weight:
+                800;
+
+            box-shadow:
+                0 15px 35px
+                rgba(74,144,226,.22);
+
+        }
+
+
+        .mpmla-profile-card h3 {
+
+            font-size:
+                18px;
+
+        }
+
+
+        .mpmla-profile-card p {
+
+            margin-top:
+                5px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-profile-details {
+
+            padding:
+                23px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                19px;
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                var(--shadow-sm);
+
+        }
+
+
+        .mpmla-profile-info {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2,minmax(0,1fr));
+
+            gap:
+                12px;
+
+        }
+
+
+        .mpmla-info {
+
+            padding:
+                15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            background:
+                var(--surface-soft);
+
+        }
+
+
+        .mpmla-info small {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                7px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                .8px;
+
+        }
+
+
+        .mpmla-info strong {
+
+            display:
+                block;
+
+            margin-top:
+                6px;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .mpmla-profile-toolbar {
+
+            display:
+                flex;
+
+            align-items:
+                flex-start;
+
+            justify-content:
+                space-between;
+
+            gap:
+                14px;
+
+            margin-bottom:
+                16px;
+
+        }
+
+
+        .mpmla-profile-toolbar h3 {
+
+            margin:
+                0;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .mpmla-profile-toolbar p {
+
+            margin-top:
+                4px;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-profile-actions {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                8px;
+
+        }
+
+
+        .mpmla-profile-actions button {
+
+            min-height:
+                36px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                10px;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-primary);
+
+            font-family:
+                inherit;
+
+            font-size:
+                9px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+            transition:
+                transform .18s ease,
+                background .18s ease,
+                border-color .18s ease;
+
+        }
+
+
+        .mpmla-profile-actions button:hover {
+
+            transform:
+                translateY(-1px);
+
+            border-color:
+                rgba(74,144,226,.35);
+
+        }
+
+
+        .mpmla-profile-actions .mpmla-profile-save {
+
+            border-color:
+                transparent;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(135deg, var(--mp-blue), var(--mp-purple));
+
+        }
+
+
+        .mpmla-profile-field {
+
+            display:
+                grid;
+
+            gap:
+                7px;
+
+        }
+
+
+        .mpmla-profile-field label {
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                8px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .mpmla-profile-field input {
+
+            width:
+                100%;
+
+            min-height:
+                42px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                10px;
+
+            outline:
+                none;
+
+            background:
+                var(--surface-soft);
+
+            color:
+                var(--text-primary);
+
+            font-family:
+                inherit;
+
+            font-size:
+                10px;
+
+            transition:
+                border-color .18s ease,
+                box-shadow .18s ease,
+                background .18s ease;
+
+        }
+
+
+        .mpmla-profile-field input:focus {
+
+            border-color:
+                var(--mp-blue);
+
+            background:
+                var(--surface);
+
+            box-shadow:
+                0 0 0 4px rgba(74,144,226,.09);
+
+        }
+
+
+        .mpmla-profile-message {
+
+            min-height:
+                17px;
+
+            margin-top:
+                11px;
+
+            color:
+                var(--text-secondary);
+
+            font-size:
+                9px;
+
+        }
+
+
+        .mpmla-profile-message.success {
+
+            color:
+                var(--mp-green);
+
+        }
+
+
+        .mpmla-profile-message.error {
+
+            color:
+                var(--mp-red);
+
+        }
+
+
+        /* =====================================================
+           SETTINGS
+        ====================================================== */
+
+        .mpmla-setting-list {
+
+            display:
+                grid;
+
+            gap:
+                12px;
+
+        }
+
+
+        .mpmla-setting {
+
+            min-height:
+                78px;
+
+            padding:
+                18px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                16px;
+
+            background:
+                var(--surface);
+
+        }
+
+
+        .mpmla-setting strong {
+
+            display:
+                block;
+
+            font-size:
+                12px;
+
+        }
+
+
+        .mpmla-setting small {
+
+            display:
+                block;
+
+            margin-top:
+                4px;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                8px;
+
+        }
+
+
+        .mpmla-setting button {
+
+            min-height:
+                38px;
+
+            padding:
+                0 13px;
+
+            border:
+                0;
+
+            border-radius:
+                10px;
+
+            color:
+                white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--mp-blue),
+                    var(--mp-purple)
+                );
+
+            font-family:
+                inherit;
+
+            font-size:
+                8px;
+
+            font-weight:
+                800;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width:1100px) {
+
+            .mpmla-stat-grid,
+            .mpmla-kpi-grid {
+
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+            }
+
+
+            .mpmla-area-grid {
+
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+            }
+
+        }
+
+
+        @media (max-width:900px) {
+
+            .mpmla-layout {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .mpmla-dashboard-page
+            .dashboard-sidebar {
+
+                width:
+                    100%;
+
+                border-right:
+                    0;
+
+                border-bottom:
+                    1px solid var(--border);
+
+            }
+
+
+            .mpmla-dashboard-page
+            .sidebar-nav {
+
+                display:
+                    flex;
+
+                overflow-x:
+                    auto;
+
+                padding-bottom:
+                    4px;
+
+            }
+
+
+            .mpmla-dashboard-page
+            .sidebar-nav-item {
+
+                width:
+                    auto;
+
+                min-width:
+                    max-content;
+
+            }
+
+
+            .mpmla-engine {
+
+                display:
+                    none;
+
+            }
+
+
+            .mpmla-profile-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (max-width:680px) {
+
+            .mpmla-dashboard-page
+            .dashboard-header {
+
+                flex-wrap:
+                    wrap;
+
+            }
+
+
+            .mpmla-dashboard-page
+            .dashboard-header-actions {
+
+                width:
+                    100%;
+
+                justify-content:
+                    flex-end;
+
+            }
+
+
+            .mpmla-stat-grid,
+            .mpmla-kpi-grid,
+            .mpmla-3d-grid,
+            .mpmla-ai-grid,
+            .mpmla-area-grid,
+            .mpmla-profile-info {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .mpmla-chart {
+
+                height:
+                    280px;
+
+            }
+
+
+            .mpmla-bar-track {
+
+                height:
+                    195px;
+
+            }
+
+
+            .mpmla-chart-summary {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .mpmla-setting {
+
+                align-items:
+                    flex-start;
+
+                flex-direction:
+                    column;
+
+            }
+
+        }
+
+    </style>
+
+</section>

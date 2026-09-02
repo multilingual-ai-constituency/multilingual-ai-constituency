@@ -1,0 +1,403 @@
+/* =========================================================
+   MULTILINGUAL AI CONSTITUENCY
+   GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
+
+/* =========================================================
+   1. CIVICAI BRAND COLORS
+   ========================================================= */
+
+:root {
+    /* Main palette from the selected theme */
+    --sky-blue: #A0D7EB;
+    --off-white: #F5F4F5;
+    --lavender: #D0B6E8;
+    --purple: #8458B3;
+    --deep-slate: #4A4D5F;
+
+    /* Light theme */
+    --background: #F5F4F5;
+    --surface: #FFFFFF;
+    --surface-soft: #F8F7FA;
+
+    --text-primary: #252735;
+    --text-secondary: #666A7A;
+    --text-muted: #9295A3;
+
+    --border: rgba(74, 77, 95, 0.14);
+
+    --primary: #8458B3;
+    --primary-hover: #7347A2;
+
+    --accent: #A0D7EB;
+    --accent-soft: #E2F5FB;
+
+    /* Semantic colors */
+    --success: #278B68;
+    --warning: #D89B35;
+    --danger: #D85A67;
+    --info: #4E8FC4;
+
+    /* Shadows */
+    --shadow-sm:
+        0 4px 14px rgba(74, 77, 95, 0.08);
+
+    --shadow-md:
+        0 12px 32px rgba(74, 77, 95, 0.12);
+
+    --shadow-lg:
+        0 24px 60px rgba(74, 77, 95, 0.16);
+
+    /* Glass */
+    --glass:
+        rgba(255, 255, 255, 0.68);
+
+    --glass-border:
+        rgba(255, 255, 255, 0.70);
+
+    /* Layout */
+    --max-width: 1400px;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-pill: 999px;
+
+    /* Motion */
+    --transition-fast: 160ms ease;
+    --transition-normal: 280ms ease;
+    --transition-slow: 500ms ease;
+}
+
+
+/* =========================================================
+   2. DARK THEME
+   ========================================================= */
+
+[data-theme="dark"] {
+
+    --background: #181A23;
+
+    --surface: #232632;
+
+    --surface-soft: #2B2E3C;
+
+    --text-primary: #F5F4F5;
+
+    --text-secondary: #C2C4CF;
+
+    --text-muted: #858998;
+
+    --border:
+        rgba(208, 182, 232, 0.16);
+
+    --primary: #A879D3;
+
+    --primary-hover: #B88DE0;
+
+    --accent: #A0D7EB;
+
+    --accent-soft: #253B46;
+
+    --glass:
+        rgba(35, 38, 50, 0.72);
+
+    --glass-border:
+        rgba(208, 182, 232, 0.14);
+
+    --shadow-sm:
+        0 4px 18px rgba(0, 0, 0, 0.20);
+
+    --shadow-md:
+        0 14px 38px rgba(0, 0, 0, 0.30);
+
+    --shadow-lg:
+        0 28px 70px rgba(0, 0, 0, 0.40);
+}
+
+
+/* =========================================================
+   3. RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(160, 215, 235, 0.14),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 90%,
+            rgba(132, 88, 179, 0.12),
+            transparent 30%
+        ),
+        var(--background);
+
+    color: var(--text-primary);
+
+    font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    line-height: 1.5;
+
+    transition:
+        background var(--transition-normal),
+        color var(--transition-normal);
+}
+
+
+/* =========================================================
+   4. BASIC ELEMENTS
+   ========================================================= */
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+img,
+svg,
+canvas {
+    max-width: 100%;
+}
+
+
+::selection {
+    background: var(--lavender);
+    color: var(--deep-slate);
+}
+
+
+/* =========================================================
+   5. MAIN APPLICATION
+   ========================================================= */
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   6. RESPONSIVE CONTAINER
+   ========================================================= */
+
+.container {
+    width: min(
+        calc(100% - 40px),
+        var(--max-width)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* =========================================================
+   7. GLASSMORPHISM
+   ========================================================= */
+
+.glass {
+    background: var(--glass);
+
+    border:
+        1px solid
+        var(--glass-border);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   8. COMMON BUTTONS
+   ========================================================= */
+
+.btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 46px;
+
+    padding: 0 20px;
+
+    border: 1px solid transparent;
+
+    border-radius: var(--radius-md);
+
+    font-weight: 600;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+
+.btn:active {
+    transform: translateY(0);
+}
+
+
+.btn-primary {
+    background: var(--primary);
+
+    color: #FFFFFF;
+
+    box-shadow:
+        0 8px 22px
+        rgba(132, 88, 179, 0.25);
+}
+
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+
+    box-shadow:
+        0 12px 28px
+        rgba(132, 88, 179, 0.34);
+}
+
+
+.btn-secondary {
+    background: var(--accent);
+
+    color: var(--deep-slate);
+}
+
+
+.btn-outline {
+    background: transparent;
+
+    border-color: var(--border);
+
+    color: var(--text-primary);
+}
+
+
+/* =========================================================
+   9. FOCUS / ACCESSIBILITY
+   ========================================================= */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid
+        rgba(160, 215, 235, 0.75);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   10. RESPONSIVE FOUNDATION
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .container {
+        width:
+            min(
+                calc(100% - 32px),
+                var(--max-width)
+            );
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .container {
+        width:
+            calc(100% - 24px);
+    }
+
+    .btn {
+        min-height: 44px;
+
+        padding-inline: 16px;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .container {
+        width:
+            calc(100% - 20px);
+    }
+}
+
+
+/* =========================================================
+   11. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        scroll-behavior: auto !important;
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
