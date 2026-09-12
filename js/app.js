@@ -1813,214 +1813,141 @@ function initializeCitizenRegisterPage() {
 /* =========================================================
    23. CITIZEN REGISTRATION HANDLER
    ========================================================= */
-
-function handleCitizenRegistration(event) {
+async function handleCitizenRegistration(event) {
 
     if (event) {
-
         event.preventDefault();
-
     }
 
-
     const nameInput =
-        document.getElementById(
-            "registerFullName"
-        );
-
+        document.getElementById("registerFullName");
 
     const mobileInput =
-        document.getElementById(
-            "registerMobile"
-        );
-
+        document.getElementById("registerMobile");
 
     const emailInput =
-        document.getElementById(
-            "registerEmail"
-        );
-
+        document.getElementById("registerEmail");
 
     const passwordInput =
-        document.getElementById(
-            "registerPassword"
-        );
-
+        document.getElementById("registerPassword");
 
     const confirmPasswordInput =
-        document.getElementById(
-            "registerConfirmPassword"
-        );
+        document.getElementById("registerConfirmPassword");
 
+    const fullName = nameInput
+        ? nameInput.value.trim()
+        : "";
 
-    const fullName =
-        nameInput
-            ? nameInput.value.trim()
-            : "";
+    const mobile = mobileInput
+        ? mobileInput.value.trim()
+        : "";
 
+    const email = emailInput
+        ? emailInput.value.trim()
+        : "";
 
-    const mobile =
-        mobileInput
-            ? mobileInput.value.trim()
-            : "";
+    const password = passwordInput
+        ? passwordInput.value
+        : "";
 
-
-    const email =
-        emailInput
-            ? emailInput.value.trim()
-            : "";
-
-
-    const password =
-        passwordInput
-            ? passwordInput.value
-            : "";
-
-
-    const confirmPassword =
-        confirmPasswordInput
-            ? confirmPasswordInput.value
-            : "";
-
+    const confirmPassword = confirmPasswordInput
+        ? confirmPasswordInput.value
+        : "";
 
     if (!fullName) {
-
         showRegisterMessage(
             "Please enter your full name."
         );
 
         nameInput?.focus();
-
         return;
-
     }
 
-
-    if (
-        !/^[0-9]{10}$/.test(mobile)
-    ) {
-
+    if (!/^[0-9]{10}$/.test(mobile)) {
         showRegisterMessage(
             "Please enter a valid 10-digit mobile number."
         );
 
         mobileInput?.focus();
-
         return;
-
     }
-
 
     if (
         !email ||
         !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     ) {
-
         showRegisterMessage(
             "Please enter a valid email address."
         );
 
         emailInput?.focus();
-
         return;
-
     }
 
-
     if (password.length < 6) {
-
         showRegisterMessage(
             "Password must contain at least 6 characters."
         );
 
         passwordInput?.focus();
-
         return;
-
     }
 
-
-    if (
-        password !== confirmPassword
-    ) {
-
+    if (password !== confirmPassword) {
         showRegisterMessage(
             "Passwords do not match."
         );
 
         confirmPasswordInput?.focus();
-
         return;
-
     }
 
+    try {
 
-    /*
-       Check whether an account with
-       this mobile number already exists.
-    */
-
-    const existingAccount =
-        JSON.parse(
-            localStorage.getItem(
-                "civicai-citizen-account"
-            ) || "null"
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/auth/register",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fullName: fullName,
+                    mobile: mobile,
+                    email: email,
+                    password: password
+                })
+            }
         );
 
+        const data = await response.json();
 
-    if (
-        existingAccount &&
-        existingAccount.mobile === mobile
-    ) {
+        if (!response.ok) {
+            showRegisterMessage(
+                data.detail ||
+                "Registration failed. Please try again."
+            );
+
+            return;
+        }
+
+        console.log(
+            "Citizen account created successfully."
+        );
+
+        showRegisterSuccess();
+
+    } catch (error) {
+
+        console.error(
+            "Citizen registration error:",
+            error
+        );
 
         showRegisterMessage(
-            "An account with this mobile number already exists."
+            "Unable to connect to the server. Please try again."
         );
-
-        return;
-
     }
-
-
-    /*
-       Save the frontend account.
-
-       This is temporary and will later
-       be replaced by the real backend/database.
-    */
-
-    const citizenAccount = {
-
-        fullName:
-            fullName,
-
-        mobile:
-            mobile,
-
-        email:
-            email,
-
-        password:
-            password
-
-    };
-
-
-    localStorage.setItem(
-        "civicai-citizen-account",
-        JSON.stringify(
-            citizenAccount
-        )
-    );
-
-
-    console.log(
-        "Citizen account created successfully."
-    );
-
-
-    showRegisterSuccess();
-
 }
 
 
