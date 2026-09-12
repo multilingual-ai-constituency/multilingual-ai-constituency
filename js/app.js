@@ -1436,157 +1436,119 @@ function initializeCitizenLoginPage() {
    18. CITIZEN LOGIN HANDLER
    ========================================================= */
 
-function handleCitizenLogin(event) {
+async function handleCitizenLogin(event) {
 
-    if (
-        event &&
-        event.preventDefault
-    ) {
-
+    if (event) {
         event.preventDefault();
-
     }
 
-
     const mobileInput =
-        document.getElementById(
-            "citizenMobile"
-        ) || document.getElementById(
-            "mobileNumber"
-        );
-
+        document.getElementById("citizenMobile") ||
+        document.getElementById("mobileNumber");
 
     const passwordInput =
-        document.getElementById(
-            "citizenPassword"
-        ) || document.getElementById(
-            "password"
-        );
+        document.getElementById("citizenPassword") ||
+        document.getElementById("password");
 
+    const mobile = mobileInput
+        ? mobileInput.value.trim()
+        : "";
 
-    const mobile =
-        mobileInput
-            ? mobileInput.value.trim()
-            : "";
-
-
-    const password =
-        passwordInput
-            ? passwordInput.value
-            : "";
-
+    const password = passwordInput
+        ? passwordInput.value
+        : "";
 
     if (!mobile) {
-
-        showLoginMessage(
-            "Please enter your mobile number."
-        );
+        showLoginMessage("Please enter your mobile number.");
 
         if (mobileInput) {
-
             mobileInput.focus();
-
         }
 
         return;
-
     }
 
-
-    if (
-        !/^[0-9]{10}$/.test(mobile)
-    ) {
-
+    if (!/^[0-9]{10}$/.test(mobile)) {
         showLoginMessage(
             "Please enter a valid 10-digit mobile number."
         );
 
         if (mobileInput) {
-
             mobileInput.focus();
-
         }
 
         return;
-
     }
-
 
     if (!password) {
-
-        showLoginMessage(
-            "Please enter your password."
-        );
+        showLoginMessage("Please enter your password.");
 
         if (passwordInput) {
-
             passwordInput.focus();
-
         }
 
         return;
-
     }
 
+    try {
 
-    /*
-       Check whether a locally registered
-       Citizen account exists.
-    */
-
-    const registeredAccount =
-        JSON.parse(
-            localStorage.getItem(
-                "civicai-citizen-account"
-            ) || "null"
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/auth/login",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mobile: mobile,
+                    password: password
+                })
+            }
         );
 
+        const data = await response.json();
 
-    if (registeredAccount) {
-
-        if (
-            registeredAccount.mobile !== mobile ||
-            registeredAccount.password !== password
-        ) {
-
+        if (!response.ok) {
             showLoginMessage(
-                "Incorrect mobile number or password."
+                data.detail || "Invalid mobile number or password."
             );
-
             return;
-
         }
 
+        sessionStorage.setItem(
+            "civicai-authenticated",
+            "true"
+        );
+
+        sessionStorage.setItem(
+            "civicai-user-role",
+            "citizen"
+        );
+
+        sessionStorage.setItem(
+            "civicai-citizen",
+            JSON.stringify(data.citizen)
+        );
+
+        console.log(
+            "Citizen login successful."
+        );
+
+        navigateTo(
+            "citizen-dashboard"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Citizen login error:",
+            error
+        );
+
+        showLoginMessage(
+            "Unable to connect to the server. Please try again."
+        );
     }
-
-
-    /*
-       Temporary frontend authentication.
-       Backend authentication will replace
-       this later.
-    */
-
-    sessionStorage.setItem(
-        "civicai-authenticated",
-        "true"
-    );
-
-
-    sessionStorage.setItem(
-        "civicai-user-role",
-        "citizen"
-    );
-
-
-    console.log(
-        "Citizen login successful."
-    );
-
-
-    navigateTo(
-        "citizen-dashboard"
-    );
-
 }
 
 
