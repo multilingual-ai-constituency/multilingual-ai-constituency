@@ -10333,7 +10333,7 @@ function bindSidebarNavigation() {
 
     document.body.dataset.civicDashboardNavigationBound = "true";
 
-    document.addEventListener("click", function(event) {
+    document.addEventListener("click", async function(event) {
         const citizenItem = event.target.closest("[data-dashboard-view]");
         const departmentItem = event.target.closest("[data-department-view]");
         const item = citizenItem || departmentItem;
@@ -10432,7 +10432,7 @@ function bindLegacyGrievanceViewButtons() {
 }
 
 
-function bindGrievanceViewButtons() {
+async function bindGrievanceViewButtons() {
 
     if (document.body.dataset.civicGrievanceNavigationBound === "true") {
         return;
@@ -10440,16 +10440,24 @@ function bindGrievanceViewButtons() {
 
     document.body.dataset.civicGrievanceNavigationBound = "true";
 
-    document.addEventListener("click", function(event) {
+    document.addEventListener("click", async function(event) {
         const button = event.target.closest("[data-grievance-id]");
         if (!button) {
             return;
         }
 
-        const grievanceId = button.getAttribute("data-grievance-id");
-        const grievance = getDashboardGrievances().find(
-            (item) => item.id === grievanceId
-        );
+      const grievanceId = button.getAttribute("data-grievance-id");
+
+const response = await fetch(
+    "https://multilingual-ai-backend.onrender.com/api/grievances"
+);
+
+const data = await response.json();
+
+const grievance = (data.grievances || []).find(
+    (item) => item.id === grievanceId
+);
+       
 
         if (!grievance) {
             return;
