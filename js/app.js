@@ -6472,11 +6472,11 @@ function generateSubjectFromDescription(description) {
 }
 
 
-function renderCitizenGrievances() {
+async function renderCitizenGrievances() {
 
     const container = document.getElementById("citizenDashboardContent");
     if (!container) return;
-    const grievances = getDashboardGrievances();
+    const response = await fetch("https://multilingual-ai-backend.onrender.com/api/grievances"); const data = await response.json(); const grievances = data.grievances || [];
 
     container.innerHTML = `
         <section class="panel">
@@ -6503,12 +6503,14 @@ function renderCitizenGrievances() {
 }
 
 
-function renderCitizenTracking() {
+async function renderCitizenTracking() {
 
     const container = document.getElementById("citizenDashboardContent");
     if (!container) return;
     
-    const grievances = getDashboardGrievances();
+const response = await fetch("https://multilingual-ai-backend.onrender.com/api/grievances");
+const data = await response.json();
+const grievances = data.grievances || [];
     const first = grievances[0];
 
     if (!first) {
