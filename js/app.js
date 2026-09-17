@@ -6330,64 +6330,140 @@ function analyzeGrievanceDescription(description) {
     };
 }
 
-function submitGrievanceWithAnalysis(description, location, analysis) {
+async function submitGrievanceWithAnalysis(description, location, analysis) {
 
-    const messageEl = document.getElementById("grievanceMessage");
+    const messageEl =
+        document.getElementById("grievanceMessage");
+
     if (messageEl) {
         messageEl.style.display = "block";
         messageEl.style.backgroundColor = "rgba(39, 139, 104, 0.1)";
         messageEl.style.borderLeft = "4px solid var(--success)";
         messageEl.style.color = "var(--success)";
-        messageEl.textContent = "🔄 Processing your submission...";
+        messageEl.textContent = "🔄 Submitting your grievance...";
     }
 
-    setTimeout(function() {
-        
+    try {
+
+        const citizen =
+            JSON.parse(
+                sessionStorage.getItem("civicai-citizen") || "{}"
+            );
+
+        const mobile = citizen.mobile || "";
+
+        if (!mobile) {
+            if (messageEl) {
+                messageEl.textContent =
+                    "Please log in again before submitting a grievance.";
+            }
+            return;
+        }
+
+        const response = await fetch(
+            "https://multilingual-ai-backend.onrender.com/api/grievances",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mobile: mobile,
+                    problem: description,
+                    problemLocation: location,
+                    category: analysis.category || "Other",
+                    priority: analysis.priority || "Medium"
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Grievance submission failed."
+            );
+        }
+
+        const complaintId = data.complaintId;
+
+        // Keep the dashboard UI in sync
         const existing = getDashboardGrievances();
-        const id = `CG-${String(existing.length + 1001).padStart(4, "0")}`;
-        
+
         const entry = {
-            id,
+            id: complaintId,
             subject: generateSubjectFromDescription(description),
-            category: analysis.category,
+            category: analysis.category || "Other",
             location: location,
             description: description,
-            priority: analysis.priority,
-            department: analysis.department,
-            status: "Submitted",
+            priority: analysis.priority || "Medium",
+            department: analysis.department || "Other",
+            status: data.complaintStatus || "Pending",
             date: new Date().toISOString().slice(0, 10),
             timeline: [
-                { label: "Submitted", date: new Date().toISOString().slice(0, 10) }
+                {
+                    label: "Submitted",
+                    date: new Date().toISOString().slice(0, 10)
+                }
             ]
         };
 
         existing.unshift(entry);
-        localStorage.setItem("civicai-grievances", JSON.stringify(existing));
+
+        localStorage.setItem(
+            "civicai-grievances",
+            JSON.stringify(existing)
+        );
 
         // Add notification
         const notifications = getDashboardNotifications();
+
         notifications.unshift({
             id: Date.now(),
             title: "Grievance submitted successfully",
-            message: `Your grievance ${id} has been received and forwarded to ${analysis.department}.`,
+            message:
+                `Your grievance ${complaintId} has been received and is pending department action.`,
             unread: true,
             type: "grievance"
         });
-        localStorage.setItem("civicai-notifications", JSON.stringify(notifications));
+
+        localStorage.setItem(
+            "civicai-notifications",
+            JSON.stringify(notifications)
+        );
 
         updateNotificationBadge();
 
         if (messageEl) {
-            messageEl.textContent = `✅ Grievance ${id} submitted successfully! You can track it in "My Grievances".`;
+            messageEl.textContent =
+                `✅ Grievance ${complaintId} submitted successfully!`;
         }
 
-        setTimeout(() => {
+        setTimeout(function() {
             renderCitizenDashboard();
-        }, 1500);
+        }, 1200);
 
-    }, 1000);
+    } catch (error) {
+
+        console.error(
+            "Grievance submission error:",
+            error
+        );
+
+        if (messageEl) {
+            messageEl.style.display = "block";
+            messageEl.style.backgroundColor =
+                "rgba(216, 90, 103, 0.1)";
+            messageEl.style.borderLeft =
+                "4px solid var(--danger)";
+            messageEl.style.color =
+                "var(--danger)";
+
+            messageEl.textContent =
+                "Unable to submit grievance. Please try again.";
+        }
+    }
 }
-
 function generateSubjectFromDescription(description) {
 
     const words = description.trim().split(" ");
