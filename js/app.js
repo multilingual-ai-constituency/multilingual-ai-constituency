@@ -6488,7 +6488,7 @@ async function renderCitizenGrievances() {
                 ${grievances.map((grievance) => `
                     <div class="table-row">
                         <strong>${grievance.id}</strong>
-                        <span>${grievance.subject}</span>
+                        <span>${grievance.problem}</span>
                         <span>${grievance.category}</span>
                         <span>${grievance.status}</span>
                         <button type="button" class="detail-button" data-grievance-id="${grievance.id}">View</button>
