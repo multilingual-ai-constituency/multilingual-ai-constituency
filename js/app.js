@@ -10496,7 +10496,7 @@ function renderCitizenGrievanceDetail(grievance) {
             <div class="panel-header">
                 <div>
                     <span class="pill">Grievance details</span>
-                    <h3>${mpmlaEscape(grievance.subject)}</h3>
+                    <h3>${mpmlaEscape(grievance.problem)}</h3>
                 </div>
                 <span class="tag ${statusClass}">${mpmlaEscape(grievance.status)}</span>
             </div>
@@ -10506,11 +10506,11 @@ function renderCitizenGrievanceDetail(grievance) {
                     <div><strong>Category</strong><div>${mpmlaEscape(grievance.category)}</div></div>
                 </div>
                 <div class="list-item-card">
-                    <div><strong>Location</strong><div>${mpmlaEscape(grievance.location)}</div></div>
+                    <div><strong>Location</strong><div>${mpmlaEscape(grievance.problemLocation)}</div></div>
                     <div><strong>Priority</strong><div>${mpmlaEscape(grievance.priority || "Medium")}</div></div>
                 </div>
                 <div class="list-item-card">
-                    <div><strong>Description</strong><div>${mpmlaEscape(grievance.description)}</div></div>
+                    <div><strong>Description</strong><div>${mpmlaEscape(grievance.problem)}</div></div>
                 </div>
             </div>
             <div class="panel-header" style="margin-top:20px;">
