@@ -11102,6 +11102,12 @@ function renderCitizenDashboardImproved() {
     const grievances = getDashboardGrievances();
     const notifications = getDashboardNotifications();
     const profile = readLocalStorageJson("civicai-profile", {});
+
+   const citizen = JSON.parse(
+    sessionStorage.getItem("civicai-citizen") || "{}"
+);
+
+profile.fullName = citizen.fullName || profile.fullName;
     
     const stats = {
         total: grievances.length,
