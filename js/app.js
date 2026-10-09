@@ -83,6 +83,66 @@ const SupportedLanguages = {
 
 };
 
+const LoginTranslations = {
+    en: {
+        welcome: "WELCOME BACK",
+        title: "Sign in to CivicAI",
+        description: "Enter your registered mobile number and password to continue.",
+        mobile: "Mobile Number",
+        password: "Password",
+        forgot: "Forgot password?",
+        remember: "Remember me on this device",
+        signin: "Sign in to CivicAI",
+        or: "OR",
+        otp: "Continue with OTP",
+        noAccount: "Don't have a CivicAI account?",
+        create: "Create Account"
+    },
+    ta: {
+        welcome: "மீண்டும் வரவேற்கிறோம்",
+        title: "CivicAI-இல் உள்நுழையவும்",
+        description: "தொடர உங்கள் பதிவு செய்யப்பட்ட மொபைல் எண் மற்றும் கடவுச்சொல்லை உள்ளிடவும்.",
+        mobile: "மொபைல் எண்",
+        password: "கடவுச்சொல்",
+        forgot: "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
+        remember: "இந்த சாதனத்தில் என்னை நினைவில் வைத்திருக்கவும்",
+        signin: "CivicAI-இல் உள்நுழையவும்",
+        or: "அல்லது",
+        otp: "OTP மூலம் தொடரவும்",
+        noAccount: "CivicAI கணக்கு இல்லையா?",
+        create: "கணக்கை உருவாக்கவும்"
+    }
+};
+
+function applyLoginTranslations() {
+    const page = document.querySelector(
+        '.citizen-login-page[data-page="citizen-login"]'
+    );
+
+    if (!page) return;
+
+    const language = AppState.language || "en";
+    const t = LoginTranslations[language] || LoginTranslations.en;
+
+    const setText = (selector, value) => {
+        const element = page.querySelector(selector);
+        if (element) element.textContent = value;
+    };
+
+    setText(".citizen-login-label", t.welcome);
+    setText(".citizen-login-heading h2", t.title);
+    setText(".citizen-login-heading > p:last-child", t.description);
+    setText('label[for="citizenMobile"]', t.mobile);
+    setText('label[for="citizenPassword"]', t.password);
+    setText("#forgotPasswordButton", t.forgot);
+    setText(".citizen-remember span", t.remember);
+    setText("#citizenLoginButton span:first-child", t.signin);
+    setText(".citizen-divider small", t.or);
+    setText("#continueOtpButton span:last-child", t.otp);
+    setText(".citizen-create-account > span", t.noAccount);
+    setText("#createCitizenAccount", t.create);
+}
+
 
 /* =========================================================
    3. SUPPORTED ROLES
@@ -589,7 +649,8 @@ async function loadPage(pageName) {
         applyTheme();
 
         updateLanguageSelectors();
-
+       
+      applyLoginTranslations();
         closeMobileNavigation();
 
         closeAboutModal();
@@ -5752,6 +5813,7 @@ function setLanguage(language) {
 
 
     updateLanguageSelectors();
+  applyLoginTranslations();
 
 
     console.log(
