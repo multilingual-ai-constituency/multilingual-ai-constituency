@@ -152,8 +152,16 @@ const LoginTranslations = {
         securityDesc: "இந்த மாதிரி இணையதளத்தில் உங்கள் கணக்குத் தகவல் உள்ளூரில் சேமிக்கப்படுகிறது."
     }
 };
-
-
+const PageTranslations = {
+    en: {
+        welcomeTitle: "Welcome to CivicAI",
+        getStarted: "Get Started"
+    },
+    ta: {
+        welcomeTitle: "CivicAI-க்கு வரவேற்கிறோம்",
+        getStarted: "தொடங்குங்கள்"
+    }
+};
 function applyLoginTranslations() {
     const page = document.querySelector(
         '.citizen-login-page[data-page="citizen-login"]'
