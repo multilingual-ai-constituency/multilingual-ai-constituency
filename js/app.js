@@ -83,6 +83,7 @@ const SupportedLanguages = {
 
 };
 
+
 const LoginTranslations = {
     en: {
         welcome: "WELCOME BACK",
@@ -96,7 +97,26 @@ const LoginTranslations = {
         or: "OR",
         otp: "Continue with OTP",
         noAccount: "Don't have a CivicAI account?",
-        create: "Create Account"
+        create: "Create Account",
+        eyebrow: "CITIZEN ACCESS",
+        hero1: "Your voice.",
+        hero2: "Your community.",
+        hero3: "Your CivicAI.",
+        heroDescription: "Report civic problems, track complaints, connect with government services and stay informed about your constituency.",
+        feature1: "Raise grievances",
+        feature1Desc: "Voice or text based reporting",
+        feature2: "Track progress",
+        feature2Desc: "Follow complaint status in real time",
+        feature3: "AI assistance",
+        feature3Desc: "Intelligent civic issue routing",
+        footer: "CivicAI citizen services online",
+        step: "STEP 02 OF 04",
+        portal: "CITIZEN PORTAL",
+        mobileHint: "Use the mobile number registered with CivicAI.",
+        show: "Show",
+        hide: "Hide",
+        security: "Secure citizen access",
+        securityDesc: "Your account is stored locally for this frontend prototype."
     },
     ta: {
         welcome: "மீண்டும் வரவேற்கிறோம்",
@@ -110,9 +130,29 @@ const LoginTranslations = {
         or: "அல்லது",
         otp: "OTP மூலம் தொடரவும்",
         noAccount: "CivicAI கணக்கு இல்லையா?",
-        create: "கணக்கை உருவாக்கவும்"
+        create: "கணக்கை உருவாக்கவும்",
+        eyebrow: "குடிமக்கள் அணுகல்",
+        hero1: "உங்கள் குரல்.",
+        hero2: "உங்கள் சமூகம்.",
+        hero3: "உங்கள் CivicAI.",
+        heroDescription: "பொதுப் பிரச்சினைகளைப் புகாரளிக்கவும், புகார்களைக் கண்காணிக்கவும், அரசு சேவைகளுடன் இணையவும்.",
+        feature1: "குறைகளைப் பதிவு செய்யவும்",
+        feature1Desc: "குரல் அல்லது உரை மூலம் புகாரளிக்கவும்",
+        feature2: "முன்னேற்றத்தைக் கண்காணிக்கவும்",
+        feature2Desc: "புகார் நிலையை உடனுக்குடன் அறியவும்",
+        feature3: "AI உதவி",
+        feature3Desc: "பொதுப் பிரச்சினைகளைச் சரியான துறைக்கு அனுப்புதல்",
+        footer: "CivicAI குடிமக்கள் சேவைகள் ஆன்லைனில் உள்ளன",
+        step: "படி 02 / 04",
+        portal: "குடிமக்கள் தளம்",
+        mobileHint: "CivicAI-இல் பதிவு செய்த மொபைல் எண்ணைப் பயன்படுத்தவும்.",
+        show: "காட்டு",
+        hide: "மறை",
+        security: "பாதுகாப்பான குடிமக்கள் அணுகல்",
+        securityDesc: "இந்த மாதிரி இணையதளத்தில் உங்கள் கணக்குத் தகவல் உள்ளூரில் சேமிக்கப்படுகிறது."
     }
 };
+
 
 function applyLoginTranslations() {
     const page = document.querySelector(
@@ -141,7 +181,55 @@ function applyLoginTranslations() {
     setText("#continueOtpButton span:last-child", t.otp);
     setText(".citizen-create-account > span", t.noAccount);
     setText("#createCitizenAccount", t.create);
+
+    setText(".citizen-eyebrow", t.eyebrow);
+
+    const hero = page.querySelector(".citizen-visual-top h1");
+    if (hero) {
+        hero.replaceChildren();
+
+        [t.hero1, t.hero2, t.hero3].forEach((text, index) => {
+            if (index > 0) hero.appendChild(document.createElement("br"));
+
+            const span = document.createElement("span");
+            span.textContent = text;
+            hero.appendChild(span);
+        });
+    }
+
+    setText(".citizen-visual-top p", t.heroDescription);
+
+    const features = page.querySelectorAll(".citizen-feature");
+    const featureTexts = [
+        [t.feature1, t.feature1Desc],
+        [t.feature2, t.feature2Desc],
+        [t.feature3, t.feature3Desc]
+    ];
+
+    features.forEach((feature, index) => {
+        if (!featureTexts[index]) return;
+
+        const strong = feature.querySelector("strong");
+        const small = feature.querySelector("small");
+
+        if (strong) strong.textContent = featureTexts[index][0];
+        if (small) small.textContent = featureTexts[index][1];
+    });
+
+    setText(".citizen-visual-footer", t.footer);
+    setText(".citizen-step-row span:first-child", t.step);
+    setText(".citizen-step-row span:last-child", t.portal);
+    setText(".citizen-field-hint", t.mobileHint);
+    setText(".citizen-security-note strong", t.security);
+    setText(".citizen-security-note small", t.securityDesc);
+
+    const passwordToggle = page.querySelector("#passwordToggle");
+    if (passwordToggle) {
+        passwordToggle.textContent =
+            passwordToggle.dataset.visible === "true" ? t.hide : t.show;
+    }
 }
+
 
 
 /* =========================================================
