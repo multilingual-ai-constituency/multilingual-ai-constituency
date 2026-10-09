@@ -156,7 +156,7 @@ const PageTranslations = {
     en: {
         welcomeTitle: "Welcome to CivicAI",
         getStarted: "Get Started"
-       exploreCivicAI: "Explore CivicAI"
+        exploreCivicAI: "Explore CivicAI"
     },
     ta: {
         welcomeTitle: "CivicAI-க்கு வரவேற்கிறோம்",
