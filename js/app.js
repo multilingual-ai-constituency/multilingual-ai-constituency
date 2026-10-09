@@ -5914,8 +5914,7 @@ function setLanguage(language) {
         language
     );
 
-
-   updateLanguageSelectors();
+updateLanguageSelectors();
 applyPageTranslations();
 applyLoginTranslations();
 
