@@ -11420,6 +11420,21 @@ window.CivicAI = {
 
 };
 
+function applyPageTranslations() {
+    const language = AppState.language || "en";
+
+    document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+
+        const translation =
+            PageTranslations[language]?.[key] ??
+            PageTranslations.en?.[key];
+
+        if (translation !== undefined) {
+            element.textContent = translation;
+        }
+    });
+}
 
 /* =========================================================
    END OF CIVICAI APP CONTROLLER
