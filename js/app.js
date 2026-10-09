@@ -156,10 +156,13 @@ const PageTranslations = {
     en: {
         welcomeTitle: "Welcome to CivicAI",
         getStarted: "Get Started"
+       exploreCivicAI: "Explore CivicAI"
     },
     ta: {
         welcomeTitle: "CivicAI-க்கு வரவேற்கிறோம்",
         getStarted: "தொடங்குங்கள்"
+        exploreCivicAI: "CivicAI-ஐ ஆராயுங்கள்"
+
     }
 };
 function applyLoginTranslations() {
