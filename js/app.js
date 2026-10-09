@@ -742,11 +742,15 @@ async function loadPage(pageName) {
 
         initializeSharedPageControls();
 
+        
         applyTheme();
 
         updateLanguageSelectors();
-       
-      applyLoginTranslations();
+
+        applyPageTranslations();
+
+        applyLoginTranslations();
+
         closeMobileNavigation();
 
         closeAboutModal();
@@ -5908,8 +5912,9 @@ function setLanguage(language) {
     );
 
 
-    updateLanguageSelectors();
-  applyLoginTranslations();
+   updateLanguageSelectors();
+applyPageTranslations();
+applyLoginTranslations();
 
 
     console.log(
