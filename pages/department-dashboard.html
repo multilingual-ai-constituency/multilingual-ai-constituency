@@ -2882,3 +2882,82 @@
     </style>
 
 </section>
+
+
+<script>
+(function () {
+    const API_URL = "https://multilingual-ai-backend.onrender.com";
+    const content = document.getElementById("departmentDashboardContent");
+
+    if (!content) return;
+
+    async function loadDepartmentComplaints() {
+        const officerData = sessionStorage.getItem("civicaiDepartmentOfficer");
+
+        if (!officerData) {
+            content.innerHTML = "<p>Please login as a department officer.</p>";
+            return;
+        }
+
+        const officer = JSON.parse(officerData);
+        const department = officer.department;
+
+        content.innerHTML = "<p>Loading complaints...</p>";
+
+        try {
+            const response = await fetch(
+                `${API_URL}/api/grievances/department/${encodeURIComponent(department)}`
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || "Unable to load complaints.");
+            }
+
+            if (!data.complaints || data.complaints.length === 0) {
+                content.innerHTML = `
+                    <h2>${department}</h2>
+                    <p>No complaints found for your department.</p>
+                `;
+                return;
+            }
+
+            content.innerHTML = `
+                <div class="department-view">
+                    <div class="department-hero">
+                        <span class="department-hero-tag">DEPARTMENT CONSOLE</span>
+                        <h1>${department}</h1>
+                        <p>Manage complaints assigned to your department.</p>
+                    </div>
+
+                    <div class="department-panel">
+                        <h3>Assigned Grievances (${data.totalComplaints})</h3>
+                        <div class="department-case-list">
+                            ${data.complaints.map(complaint => `
+                                <article class="department-case-card">
+                                    <div>
+                                        <h3>Complaint ID: ${complaint.complaintId}</h3>
+                                        <p>${complaint.problem}</p>
+                                        <p>Location: ${complaint.problemLocation}</p>
+                                        <div class="department-case-meta">
+                                            <span class="department-chip">Category: ${complaint.category}</span>
+                                            <span class="department-chip">Priority: ${complaint.priority}</span>
+                                            <span class="department-chip">Status: ${complaint.status}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            `).join("")}
+                        </div>
+                    </div>
+                </div>
+            `;
+        } catch (error) {
+            content.innerHTML = `<p>Unable to load complaints: ${error.message}</p>`;
+        }
+    }
+
+    loadDepartmentComplaints();
+})();
+</script>
+</escape>
