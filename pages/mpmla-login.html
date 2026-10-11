@@ -214,8 +214,11 @@ loginForm.addEventListener("submit", async function (event) {
         );
 
         // TODO: Replace this with your actual MP/MLA dashboard page path.
-        loginMessage.textContent =
-            "Login successful! Authentication works. Dashboard redirect is not configured yet.";
+       loginMessage.textContent = "Login successful! Opening dashboard...";
+
+      sessionStorage.setItem("civicai_representative_logged_in", "true");
+
+      window.location.href = "mpmla-dashboard.html";
 
     } catch (error) {
         loginMessage.style.color = "red";
