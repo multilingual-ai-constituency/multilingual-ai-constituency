@@ -6195,21 +6195,36 @@ function ensureDemoState() {
 }
 
 
-function getDashboardGrievances() {
 
-    try {
+async function getDashboardGrievances() {
+    const officerData = sessionStorage.getItem("civicaiDepartmentOfficer");
 
-        return JSON.parse(
-            localStorage.getItem("civicai-grievances") || "[]"
-        );
-
-    } catch (error) {
-
-        return [];
-
+    if (!officerData) {
+        throw new Error("Please login as a department officer.");
     }
 
+    const officer = JSON.parse(officerData);
+
+    const response = await fetch(
+        `https://multilingual-ai-backend.onrender.com/api/grievances/department/${encodeURIComponent(officer.department)}`
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.detail || "Unable to load complaints.");
+    }
+
+    return (data.complaints || []).map((item) => ({
+        id: item.complaintId,
+        subject: item.category || "Civic Complaint",
+        description: item.problem || "No description provided.",
+        location: item.problemLocation || "Location pending",
+        status: item.status || "Pending",
+        priority: item.priority || "Medium"
+    }));
 }
+
 
 
 function getDashboardNotifications() {
