@@ -2072,3 +2072,80 @@
     </style>
 
 </section>
+
+
+<script>
+(function () {
+    const API_URL = "https://multilingual-ai-backend.onrender.com";
+
+    const form = document.getElementById("departmentLoginForm");
+    const message = document.getElementById("loginMessage");
+    const button = document.getElementById("departmentContinueButton");
+    const passwordInput = document.getElementById("departmentPassword");
+
+    if (!form || form.dataset.loginConnected === "true") return;
+    form.dataset.loginConnected = "true";
+
+    document.getElementById("togglePassword")?.addEventListener("click", function () {
+        const show = passwordInput.type === "password";
+        passwordInput.type = show ? "text" : "password";
+        this.textContent = show ? "Hide" : "Show";
+    });
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const officialEmail = document.getElementById("departmentEmail").value.trim().toLowerCase();
+        const password = passwordInput.value;
+
+        message.textContent = "";
+
+        if (!officialEmail || !password) {
+            message.textContent = "Enter your email and password.";
+            return;
+        }
+
+        button.disabled = true;
+        message.textContent = "Signing in...";
+
+        try {
+            const response = await fetch(`${API_URL}/api/auth/department-login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ officialEmail, password })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || "Login failed.");
+            }
+
+            sessionStorage.setItem(
+                "civicaiDepartmentOfficer",
+                JSON.stringify(data.officer)
+            );
+
+            message.textContent = "Login successful!";
+
+            // Dashboard navigation will be connected in the next step.
+        } catch (error) {
+            message.textContent = error.message || "Unable to connect to backend.";
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+    document.getElementById("backButton")?.addEventListener("click", function () {
+        window.history.back();
+    });
+
+    document.getElementById("forgotPasswordButton")?.addEventListener("click", function () {
+        message.textContent = "Please contact the administrator to reset your password.";
+    });
+
+    document.getElementById("departmentOTPButton")?.addEventListener("click", function () {
+        message.textContent = "OTP login is not configured yet.";
+    });
+})();
+</script>
