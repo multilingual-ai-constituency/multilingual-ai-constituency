@@ -148,3 +148,100 @@
     </style>
 
 </section>
+
+
+<script>
+const MPMLA_API_URL = "https://multilingual-ai-backend.onrender.com";
+
+const loginForm = document.getElementById("mpmlaLoginForm");
+const loginMessage = document.getElementById("loginMessage");
+const loginButton = document.getElementById("mpmlaContinueButton");
+const passwordInput = document.getElementById("mpmlaPassword");
+
+// Show or hide password
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
+    this.setAttribute("aria-label", isPassword ? "Hide password" : "Show password");
+});
+
+// Login using FastAPI
+loginForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const officialEmail = document.getElementById("mpmlaEmail").value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    loginMessage.textContent = "";
+    loginMessage.style.color = "red";
+
+    if (!officialEmail || !password) {
+        loginMessage.textContent = "Please enter your official email and password.";
+        return;
+    }
+
+    loginButton.disabled = true;
+    loginButton.textContent = "Signing in...";
+
+    try {
+        const response = await fetch(
+            `${MPMLA_API_URL}/api/auth/representative-login`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    officialEmail: officialEmail,
+                    password: password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Login failed.");
+        }
+
+        loginMessage.style.color = "green";
+        loginMessage.textContent = "Login successful!";
+
+        // Store only the representative's non-sensitive profile information.
+        sessionStorage.setItem(
+            "civicaiRepresentative",
+            JSON.stringify(data.representative)
+        );
+
+        // TODO: Replace this with your actual MP/MLA dashboard page path.
+        loginMessage.textContent =
+            "Login successful! Authentication works. Dashboard redirect is not configured yet.";
+
+    } catch (error) {
+        loginMessage.style.color = "red";
+        loginMessage.textContent =
+            error.message || "Unable to connect to the backend.";
+    } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = "Continue to Representative Portal →";
+    }
+});
+
+// Back button
+document.getElementById("backButton").addEventListener("click", function () {
+    window.history.back();
+});
+
+// OTP is not connected yet
+document.getElementById("mpmlaOTPButton").addEventListener("click", function () {
+    loginMessage.style.color = "red";
+    loginMessage.textContent = "OTP login is not configured yet.";
+});
+
+// Password reset is not connected yet
+document.getElementById("forgotPasswordButton").addEventListener("click", function () {
+    loginMessage.style.color = "red";
+    loginMessage.textContent = "Please contact the administrator to reset your password.";
+});
+</script>
+
